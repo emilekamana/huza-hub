@@ -81,14 +81,20 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const DrawerLeft = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { userInfo } = useSelector(state => state.signIn);
 
-  const menuItems = [
-    
+  var menuItems=[
     { text: 'Home', icon: <HomeIcon /> , path: '/home'},
-    { text: 'Notifications', icon: <NotificationsIcon /> , path: '/notifications'},
-    { text: 'Tasks Booked', icon: <Dashboard />, path: '/userdashboard' },
-    
   ];
+  if(userInfo){
+    menuItems = [
+      
+      { text: 'Home', icon: <HomeIcon /> , path: '/home'},
+      { text: 'Notifications', icon: <NotificationsIcon /> , path: '/notifications'},
+      userInfo.role == 0? { text: 'Tasks Booked', icon: <Dashboard />, path: '/userdashboard' }:{ text: 'Tasks Booked', icon: <Dashboard />, path: '/admindashboard' },
+      
+    ]
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,7 +116,6 @@ const DrawerLeft = ({ children }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { palette } = useTheme();
-  const { userInfo } = useSelector(state => state.signIn);
   const navigate = useNavigate();
 
   return (

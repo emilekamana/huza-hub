@@ -32,6 +32,7 @@ import { useSelector } from "react-redux";
 import { themeColors } from "./theme";
 import LandingPage from "./pages/Landingpage";
 import BookingPage from "./pages/BookingPage";
+import HomeTasker from "./pages/HomeTasker";
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -46,6 +47,7 @@ const DashCreateCategoryHOC = Layout(DashCreateCategory);
 
 const App = () => {
   const { mode } = useSelector((state) => state.mode);
+  const { userInfo } = useSelector(state => state.signIn);
   const theme = useMemo(() => createTheme(themeColors(mode)), [mode]);
 
   return (
@@ -64,7 +66,15 @@ const App = () => {
               <Route path="/register" element={<Register />} />
               <Route path="/job/:id" element={<SingleJob />} />
               <Route path="/userdashboard" element={<UserDashboard />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/home" element={
+                !userInfo ?
+                <Home />
+                : userInfo.role == 0?
+                <Home />
+                :
+                <HomeTasker />
+              
+              } />
               <Route path="/admindashboard" element={<AdminDashboard />} />
               <Route path="/booking" element={<BookingPage />} />
               <Route
