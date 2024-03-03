@@ -37,6 +37,7 @@ const Register = () => {
       password: "",
       repeatPassword: "",
       rememberMe: false,
+      role: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
@@ -45,6 +46,22 @@ const Register = () => {
       navigate("/login");
     },
   });
+
+  // const jobFormik = useFormik({
+  //   initialValues: {
+  //     username: "",
+  //     password: "",
+  //     repeatPassword: "",
+  //     rememberMe: false,
+  //     tasker: false,
+  //   },
+  //   validationSchema: validationSchema,
+  //   onSubmit: (values, actions) => {
+  //     dispatch(userSignUpAction(values));
+  //     actions.resetForm();
+  //     navigate("/login");
+  //   },
+  // });
 
   return (
     <Box
@@ -115,6 +132,18 @@ const Register = () => {
           helperText={
             formik.touched.repeatPassword && formik.errors.repeatPassword
           }
+        />
+        <FormControlLabel
+          control={
+              <Checkbox
+                  id="role"
+                  name="role"
+                  color="primary"
+                  checked={formik.values.role}
+                  onChange={formik.handleChange}
+              />
+          }
+          label="Sign up as tasker"
         />
         <FormControlLabel
           control={

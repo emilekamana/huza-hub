@@ -112,7 +112,7 @@ const LogIn = () => {
             </Button>
             <Typography variant="body2">
               Don't have an account?{" "}
-              <Button href="/signup" color="primary">
+              <Button href="/register" color="primary">
                 Sign up
               </Button>
             </Typography>
