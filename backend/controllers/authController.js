@@ -33,11 +33,11 @@ exports.signin = async (req, res, next) => {
             return next(new ErrorResponse("please add a password", 403));
         }
 
-        //check user email
-        // const user = await User.findOne({ email });
-        // if (!user) {
-        //     return next(new ErrorResponse("invalid credentials", 400));
-        // }
+        //check user name
+        const user = await User.findOne({ username });
+        if (!user) {
+            return next(new ErrorResponse("invalid credentials", 400));
+        }
         //check password
         const isMatched = await user.comparePassword(password);
         if (!isMatched) {

@@ -28,6 +28,7 @@ import { jobLoadAction } from "../redux/actions/jobAction";
 import { jobTypeLoadAction } from "../redux/actions/jobTypeAction";
 import SearchInputEl from "../component/SearchInputEl";
 import PopularProjects from "../component/ProjectCard";
+import DrawerLeft from "../component/DrawerLeft";
 
 const Home = () => {
   const { jobs, setUniqueLocation, pages, loading } = useSelector(
@@ -55,8 +56,9 @@ useEffect(() => {
 
   return (
     <>
+    <DrawerLeft>
       <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
-        <Navbar />
+        
         <Box
           sx={{
             textAlign: "center",
@@ -99,7 +101,7 @@ useEffect(() => {
           </Container>
         </Box>
         <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
-        <Navbar />
+        {/* <Navbar /> */}
         {/* ... existing search bar Box ... */}
 
         <Container maxWidth="lg" sx={{ py: 5 }}>
@@ -175,6 +177,7 @@ useEffect(() => {
         </Container>
       </Box>
       </Box>
+      </DrawerLeft>
       {/* <Footer /> */}
     </>
   );
