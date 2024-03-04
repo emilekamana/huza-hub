@@ -6,11 +6,13 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import WorkIcon from '@mui/icons-material/Work';
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import DrawerLeft from '../../component/DrawerLeft';
 
 const UserDashboard = () => {
     const { user } = useSelector(state => state.userProfile);
     return (
         <>
+        <DrawerLeft>
             <Box >
 
                 <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
@@ -37,7 +39,7 @@ const UserDashboard = () => {
 
                 </Stack>
             </Box>
-
+         </DrawerLeft>
         </>
     )
 }

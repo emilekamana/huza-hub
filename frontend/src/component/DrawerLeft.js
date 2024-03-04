@@ -90,7 +90,7 @@ const DrawerLeft = ({ children }) => {
     menuItems = [
       
       { text: 'Home', icon: <HomeIcon /> , path: '/home'},
-      { text: 'Notifications', icon: <NotificationsIcon /> , path: '/notifications'},
+      { text: 'Notifications', icon: <NotificationsIcon /> , path: '/notification'},
       userInfo.role == 0? { text: 'Tasks Booked', icon: <Dashboard />, path: '/userdashboard' }:{ text: 'Tasks Booked', icon: <Dashboard />, path: '/admindashboard' },
       
     ]

@@ -1,9 +1,8 @@
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { Typography } from '@mui/material';
-import { Box, Grid, Container } from '@mui/material';
+import "slick-carousel/slick/slick.css";
 
 const SlickSlider = () => {
   const settings = {
@@ -28,10 +27,10 @@ const SlickSlider = () => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       {/* Adjust the width of the slider here */}
-      <Box sx={{ width: '60%', maxWidth: 600 }}> {/* Example: Makes the slider smaller and caps its max width */}
+      <Box sx={{ width: '100%', overflow: 'hidden' }}> {/* Example: Makes the slider smaller and caps its max width */}
         <Slider {...settings}>
           {slidesData.map(slide => (
-            <Box key={slide.id} sx={{ position: 'relative', width: '100%', height: '250px', overflow: 'hidden' }}>
+            <Box key={slide.id} sx={{ position: 'relative', width: '100%', height: '500px', overflow: 'hidden' }}>
               <img src={slide.image} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <Box
                 sx={{

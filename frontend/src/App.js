@@ -33,6 +33,7 @@ import { themeColors } from "./theme";
 import LandingPage from "./pages/Landingpage";
 import BookingPage from "./pages/BookingPage";
 import HomeTasker from "./pages/HomeTasker";
+import Notification from "./pages/Notification";
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -63,6 +64,7 @@ const App = () => {
               <Route path="/search/location/:location" element={<Home />} />
               <Route path="/search/:keyword" element={<Home />} />
               <Route path="/login" element={<LogIn />} />
+              <Route path="/notification" element={<Notification />} />
               <Route path="/register" element={<Register />} />
               <Route path="/job/:id" element={<SingleJob />} />
               <Route path="/userdashboard" element={<UserDashboard />} />
