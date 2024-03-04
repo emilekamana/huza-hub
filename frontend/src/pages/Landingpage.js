@@ -6,6 +6,7 @@ import Navbarr from "../component/Navbar2";
 import SlickSlider from "../component/SlickSlider";
 import TaskerSuggestions from "../component/TaskerSuggestions";
 import HowItWorks from "../component/HowItWorks";
+import Services from "../component/Services"; // Import the Services component
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -47,8 +48,9 @@ const LandingPage = () => {
           </Button>
         </Box>
         
-        <Container maxWidth="xl" sx={{ py: 4 }}>
+        <Container maxWidth="xl" sx={{ py: -1 }}>
           <Grid container spacing={4} alignItems="stretch">
+            <Services /> {/* Use the Services component */}
             <Grid item xs={12} md={8}>
               <HowItWorks />
               {/* The SlickSlider is moved to the top Box */}
