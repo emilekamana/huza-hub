@@ -46,18 +46,6 @@ const jobsHistorySchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
 
-    // firstName: {
-    //     type: String,
-    //     trim: true,
-    //     required: [true, 'first name is required'],
-    //     maxlength: 32,
-    // },
-    // lastName: {
-    //     type: String,
-    //     trim: true,
-    //     required: [true, 'last name is required'],
-    //     maxlength: 32,
-    // },
     username: {
         type: String,
         trim: true,
@@ -71,14 +59,32 @@ const userSchema = new mongoose.Schema({
         minlength: [6, 'password must have at least (6) caracters'],
     },
 
-    jobsHistory: [jobsHistorySchema],
-
-    role: {
+    fee: {
         type: Number,
         default: 0
+    },
+
+
+    serviceType: {
+        type: String,
+        trim: true,
+        required: [true, 'service type is required'],
+    },
+
+    Location: {
+        type: String,
+        trim: true,
+        required: [true, 'location is required'],
+    },
+
+    description: {
+        type: String,
+        trim: true,
+        required: [true, 'description is required'],
+    },
     }
 
-}, { timestamps: true })
+, { timestamps: true })
 
 //encrypting password before saving
 userSchema.pre('save', async function (next) {
