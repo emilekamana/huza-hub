@@ -244,8 +244,8 @@ const handleChangePage = (event, newPage) => {
             </Grid>
           </Container>
         </Box>
+        <Footer />
       </DrawerLeft>
-      <Footer />
     </>
   );
 };

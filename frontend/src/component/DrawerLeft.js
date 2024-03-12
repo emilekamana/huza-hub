@@ -34,21 +34,14 @@ import { userLogoutAction } from '../redux/actions/userAction';
 const drawerWidth = 240;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
+  ({ theme }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
+    // marginLeft: drawerWidth, // Ensures the Main content is pushed to the right
   }),
 );
 
@@ -80,7 +73,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const DrawerLeft = ({ children }) => {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const { userInfo } = useSelector(state => state.signIn);
 
   var menuItems=[
@@ -96,13 +89,13 @@ const DrawerLeft = ({ children }) => {
     ]
   }
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+  // const handleDrawerOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  // const handleDrawerClose = () => {
+  //   setOpen(false);
+  // };
 
       // log out user
   const logOutUser = () => {
@@ -121,9 +114,9 @@ const DrawerLeft = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -131,7 +124,7 @@ const DrawerLeft = ({ children }) => {
             sx={{ mr: 2, ...(open && { display: 'none' }) }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" noWrap component="div">
             HuzaHub
           </Typography>
@@ -146,14 +139,13 @@ const DrawerLeft = ({ children }) => {
             boxSizing: 'border-box',
           },
         }}
-        variant="persistent"
-        anchor="left"
-        open={open}
+        variant="permanent" // Drawer is always visible
+        open // Prop open is always true for permanent drawer
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+          {/* <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
+          </IconButton> */}
         </DrawerHeader>
         <Divider />
         <List>
@@ -215,7 +207,7 @@ const DrawerLeft = ({ children }) => {
             
         </List>
       </Drawer>
-      <Main open={open}>
+      <Main>
         <DrawerHeader />
         {children}
       </Main>

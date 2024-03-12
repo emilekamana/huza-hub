@@ -69,8 +69,8 @@ const AdminDashboard = () => {
                     />
                 </LocalizationProvider>
             </Box>
+            <Footer />
         </DrawerLeft>
-        <Footer />
         </>
     )
 }

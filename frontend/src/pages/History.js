@@ -52,8 +52,8 @@ const History = () => {
               {selectedTab === 1 && renderServiceList('completed')}
             </Box>
         </Box>
+        <Footer />
       </DrawerLeft>
-      <Footer />
     </>
   );
 };

@@ -89,8 +89,8 @@ const HomeTasker = () => {
           </Container>
         </Box>
       </Box>
-      </DrawerLeft>
       <Footer />
+      </DrawerLeft>
     </>
   );
 };

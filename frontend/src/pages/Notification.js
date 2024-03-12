@@ -77,8 +77,8 @@ const Notification = () => {
           ))}
         </List>
       </Box>
-      </DrawerLeft>
       <Footer />
+      </DrawerLeft>
     </>
   );
 };
