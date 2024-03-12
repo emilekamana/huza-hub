@@ -8,14 +8,34 @@ exports.allUsers = async (req, res, next) => {
     const page = Number(req.query.pageNumber) || 1;
     const count = await User.find({}).estimatedDocumentCount();
 
+    const keyword = req.query.keyword ? {
+        serviceType: {
+            $regex: req.query.keyword,
+            $options: 'i'
+        }
+    } : {}
+
+    //jobs by location
+    let locations = [];
+    const jobByLocation = await User.find({role: 'service provider'}, { location: 1 });
+    jobByLocation.forEach(val => {
+        if(val !== null){
+        locations.push(val.location);
+    }
+    });
+    let setUniqueLocation = [...new Set(locations)];
+    let location = req.query.location;
+    let locationFilter = location !== '' ? location : setUniqueLocation;
+
     try {
-        const users = await User.find().sort({ createdAt: -1 }).select('-password')
+        const users = await User.find({...keyword, location: locationFilter }).sort({ createdAt: -1 }).select('-password')
             .skip(pageSize * (page - 1))
             .limit(pageSize)
 
         res.status(200).json({
             success: true,
             users,
+            setUniqueLocation,
             page,
             pages: Math.ceil(count / pageSize),
             count

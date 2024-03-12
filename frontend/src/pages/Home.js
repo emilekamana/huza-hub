@@ -31,17 +31,23 @@ import PopularProjects from "../component/ProjectCard";
 import DrawerLeft from "../component/DrawerLeft";
 
 const Home = () => {
-  const { setUniqueLocation, pages, loading } = useSelector(
+  const { pages, loading } = useSelector(
     (state) => state.loadJobs
   );
 
+
+  const { keyword, location } = useParams();
+
   const [users, setUsers] = useState([]);
+  const [setUniqueLocation, setSetUniqueLocation] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        console.log('keyword: ', keyword)
+        console.log('location: ', location)
         // Include credentials with the request
-        const response = await fetch("http://localhost:9000/api/allUsers", {
+        const response = await fetch(`http://localhost:9000/api/allUsers/?keyword=${keyword||''}&location=${location||''}`, {
           credentials: "include", // This line is added to include cookies with the request
         });
 
@@ -52,6 +58,7 @@ const Home = () => {
         const data = await response.json();
         console.log(data)
         const taskers = data.users.filter((user) => user.role === 'service provider');
+        setSetUniqueLocation(data.setUniqueLocation)
 
         // console.log("data", data.users.filter((user) => user.role !== "admin"));
         setUsers(taskers);
@@ -61,13 +68,12 @@ const Home = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, [keyword, location]);
 
   console.log("all users", users);
 
   const { palette } = useTheme();
   const dispatch = useDispatch();
-  const { keyword, location } = useParams();
 
   const [page, setPage] = useState(1);
   const [cat, setCat] = React.useState("");
