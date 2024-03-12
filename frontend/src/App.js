@@ -35,6 +35,11 @@ import BookingPage from "./pages/BookingPage";
 import HomeTasker from "./pages/HomeTasker";
 import Notification from "./pages/Notification";
 import Services from "./component/Services";
+import ServiceProvider from "./pages/Signup";
+import Payment from "./pages/Payment";
+import Footer from "./component/Footer";
+import Signin from "./pages/Signin";
+import History from "./pages/History";
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -65,16 +70,24 @@ const App = () => {
               <Route path="/search/location/:location" element={<Home />} />
               <Route path="/search/:keyword" element={<Home />} />
               <Route path="/login" element={<LogIn />} />
+              <Route path="/serviceProvider" element={<ServiceProvider />} />
               <Route path="/services" element={<Services />} />
               <Route path="/notification" element={<Notification />} />
+              <Route path="/footer" element={<Footer />} />
+              <Route path="/signup" element={<ServiceProvider />} />
+              <Route path="/signin" element={<Signin />} />
+              <Route path="/hometasker" element={<HomeTasker />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/history" element={<History />} />
               <Route path="/job/:id" element={<SingleJob />} />
               <Route path="/userdashboard" element={<UserDashboard />} />
+              <Route path="/admindashboard" element={<AdminDashboard />} />
               <Route path="/home" element={
-                !userInfo ?
+                userInfo ?
                 <Home />
-                : userInfo.role == 0?
-                <Home />
+                : userInfo?.role == "client" ?
+                <LandingPage />
                 :
                 <HomeTasker />
               

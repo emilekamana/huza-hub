@@ -24,6 +24,8 @@ import SearchInputEl from "../component/SearchInputEl";
 import SelectComponent from "../component/SelectComponent";
 import { jobLoadAction } from "../redux/actions/jobAction";
 import { jobTypeLoadAction } from "../redux/actions/jobTypeAction";
+import DrawerLeft from "../component/DrawerLeft";
+import Footer from "../component/Footer";
 
 const HomeTasker = () => {
   const { jobs, setUniqueLocation, pages, loading } = useSelector(
@@ -51,6 +53,7 @@ const HomeTasker = () => {
 
   return (
     <>
+    <DrawerLeft>
       <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
         <Navbar />
         <Box
@@ -83,107 +86,11 @@ const HomeTasker = () => {
               }}>
               Discover trusted handyman services near you.
             </Typography>
-            <SearchInputEl />
-            {/* <Button
-              variant="contained"
-              color="secondary"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Search Now
-            </Button> */}
-            {/* <Box mt={2}>
-              <Link to="/signup" style={{ textDecoration: "none" }}>
-                <Typography sx={{ color: "secondary.main" }}>
-                  Don't have an account? Sign up
-                </Typography>
-              </Link>
-            </Box> */}
-          </Container>
-        </Box>
-        <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
-          <Navbar />
-          {/* ... existing search bar Box ... */}
-
-          <Container maxWidth="lg" sx={{ py: 5 }}>
-            <Grid container spacing={4}>
-              {/* Jobs and Popular Projects Section */}
-              <Grid item xs={12} md={8} lg={9}>
-                {/* Popular Projects Section */}
-                <Box display="flex" justifyContent="center" marginBottom="50px">
-                  <Typography
-                    variant="h4"
-                    gutterBottom
-                    sx={{ fontWeight: "bold" }}>
-                    Popular Projects
-                  </Typography>
-                </Box>
-                <Grid container spacing={4} justifyContent="center">
-                  <PopularProjects />
-                </Grid>
-              </Grid>
-
-              <Grid item xs={12} lg={7}>
-                {/* Jobs Listing */}
-                {loading ? (
-                  <LoadingBox />
-                ) : (
-                  <Box>
-                    {/* Conditionally render jobs or no results message */}
-                    {jobs && jobs.length === 0 ? (
-                      <Typography variant="h6">No result found!</Typography>
-                    ) : (
-                      jobs.map((job, i) => <CardElement key={i} {...job} />)
-                    )}
-                    <Pagination
-                    // Pagination props
-                    />
-                  </Box>
-                )}
-              </Grid>
-
-              {/* Filter by Section */}
-              <Grid item xs={12} md={4} lg={3}>
-                <Card sx={{ position: "sticky", top: 80 }}>
-                  {" "}
-                  {/* Adjust top as necessary */}
-                  <CardContent>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontWeight: "600",
-                        mb: 2,
-                        color: palette.primary.main,
-                      }}>
-                      Filter by
-                    </Typography>
-                    <SelectComponent
-                      handleChangeCategory={handleChangeCategory}
-                      cat={cat}
-                    />
-                    <MenuList>
-                      {setUniqueLocation &&
-                        setUniqueLocation.map((location, i) => (
-                          <MenuItem key={i}>
-                            <ListItemIcon>
-                              <LocationOnIcon fontSize="small" />
-                            </ListItemIcon>
-                            <Typography variant="body2">
-                              <Link to={`/search/location/${location}`}>
-                                {location}
-                              </Link>
-                            </Typography>
-                          </MenuItem>
-                        ))}
-                    </MenuList>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-            {/* </Grid> */}
           </Container>
         </Box>
       </Box>
-      {/* <Footer /> */}
+      </DrawerLeft>
+      <Footer />
     </>
   );
 };

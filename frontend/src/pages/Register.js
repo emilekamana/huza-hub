@@ -11,9 +11,9 @@ import {
 import { useFormik } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { userSignUpAction } from "../redux/actions/userAction";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   username: yup.string("Enter your username").required("Username is required"),
@@ -36,12 +36,13 @@ const Register = () => {
       username: "",
       password: "",
       repeatPassword: "",
-      rememberMe: false,
+      // rememberMe: false,
       role: false,
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-      dispatch(userSignUpAction(values));
+      // dispatch(userSignUpAction(values));
+      dispatch(userSignUpAction({...values, role:"client"}));
       actions.resetForm();
       navigate("/login");
     },
@@ -91,7 +92,7 @@ const Register = () => {
           <LockOpenIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Welcome to HuzaHub!
+          Sign up as a Client
         </Typography>
         <TextField
           margin="normal"
@@ -133,19 +134,8 @@ const Register = () => {
             formik.touched.repeatPassword && formik.errors.repeatPassword
           }
         />
-        <FormControlLabel
-          control={
-              <Checkbox
-                  id="role"
-                  name="role"
-                  color="primary"
-                  checked={formik.values.role}
-                  onChange={formik.handleChange}
-              />
-          }
-          label="Sign up as tasker"
-        />
-        <FormControlLabel
+        
+        {/* <FormControlLabel
           control={
             <Checkbox
               id="rememberMe"
@@ -156,7 +146,7 @@ const Register = () => {
             />
           }
           label="Remember me"
-        />
+        /> */}
         <Button
           type="submit"
           fullWidth

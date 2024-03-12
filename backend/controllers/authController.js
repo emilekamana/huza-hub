@@ -4,7 +4,7 @@ const ErrorResponse = require('../utils/errorResponse');
 
 
 exports.signup = async (req, res, next) => {
-    const { username, fee } = req.body;
+    const { username, password, location, fee, serviceType, description } = req.body;
     const userExist = await User.findOne({ username });
     if (userExist) {
         return next(new ErrorResponse("Username already registred", 400));
@@ -52,16 +52,16 @@ exports.signin = async (req, res, next) => {
     }
 }
 
-// const sendTokenResponse = async (user, codeStatus, res) => {
-//     const token = await user.getJwtToken();
-//     res
-//         .status(codeStatus)
-//         .cookie('token', token, { maxAge: 60 * 60 * 1000, httpOnly: true })
-//         .json({
-//             success: true,
-//             role: user.role
-//         })
-// }
+const sendTokenResponse = async (user, codeStatus, res) => {
+    const token = await user.getJwtToken();
+    res
+        .status(codeStatus)
+        .cookie('token', token, { maxAge: 60 * 60 * 1000, httpOnly: true })
+        .json({
+            success: true,
+            role: user.role
+        })
+}
 
 
 // log out

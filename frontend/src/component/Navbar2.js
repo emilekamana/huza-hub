@@ -4,17 +4,20 @@ import { Link as RouterLink } from 'react-router-dom';
 import WorkIcon from '@mui/icons-material/Work';
 import { Typography } from '@mui/material';
 import { Box } from '@mui/material';
+import { Link } from "react-router-dom";
 
 const Navbarr = () => {
   const theme = useTheme();
+  const { palette } = useTheme();
+
 
   return (
-    <AppBar position="static" color="default" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}>
+    <AppBar position="static" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, bgcolor: palette.primary.main}}>
       <Toolbar sx={{ justifyContent: 'flex-start', padding: '0 24px' }}>
         {/* Logo and brand name */}
         <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '1000px' }}>
             {/* Adjust the right margin as needed */}
-          <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <WorkIcon sx={{ display: { xs: 'none', md: 'flex', color: 'white' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -25,7 +28,7 @@ const Navbarr = () => {
               fontFamily: 'monospace',
               fontWeight: 'bold',
               letterSpacing: '.3rem',
-              color: 'black',
+              color: 'white',
               textDecoration: 'none',
             }}
           >
@@ -35,8 +38,13 @@ const Navbarr = () => {
         
         {/* Navigation Links */}
         <nav>
-          <Button component={RouterLink} to="/about" sx={{ my: 1, mx: 1.5 , color: 'black', fontWeight: 'bold'}}>
-            About us
+          <Button sx={{ my: 1, mx: 1.5 , color: 'white', fontWeight: 'bold'}}>
+            <Link
+              to="/footer"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+                About us
+            </Link>
           </Button>
         </nav>
 
@@ -44,11 +52,11 @@ const Navbarr = () => {
         <Button component={RouterLink} to="/login" sx={{
           my: 1,
           mx: 1.5,
-          color: 'black',
+          color: 'white',
           fontWeight: 'bold',
           '&:hover': {
-            bgcolor: theme.palette.primary.main, // On hover the Login button changes to the primary color
-            color: 'white',
+            bgcolor: 'white', // On hover the Login button changes to the primary color
+            color: theme.palette.primary.main,
             transition: theme.transitions.create(['background-color', 'color'], {
               duration: theme.transitions.duration.standard,
             }),
@@ -56,7 +64,7 @@ const Navbarr = () => {
         }}>
           Log in
         </Button>
-        <Button component={RouterLink} to="/register" variant="contained" sx={{
+        <Button component={RouterLink} to="/signup" variant="contained" sx={{
           my: 1,
           mx: 1.5,
           fontWeight: 'bold',
@@ -68,7 +76,7 @@ const Navbarr = () => {
             }),
           },
         }}>
-          Get started
+          Start Working
         </Button>
       </Toolbar>
     </AppBar>

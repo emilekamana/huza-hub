@@ -17,10 +17,9 @@ const SlickSlider = () => {
 
   const slidesData = [
     // Replace with your actual data and add more slides as needed
-    { id: 1, title: 'Plumbing Services', image: 'https://img.freepik.com/free-photo/plumbing-repair-service_181624-27146.jpg?w=900&t=st=1709380581~exp=1709381181~hmac=6db72d32fe96444c7fd21195d8c2b24bcfe2861e44113d8cc1734eed606c3a4c' },
+    { id: 1, title: 'Appliance maintenance Services', image: 'https://img.freepik.com/free-photo/plumbing-repair-service_181624-27146.jpg?w=900&t=st=1709380581~exp=1709381181~hmac=6db72d32fe96444c7fd21195d8c2b24bcfe2861e44113d8cc1734eed606c3a4c' },
     { id: 2, title: 'Electrical Services', image: 'https://img.freepik.com/free-photo/top-view-circuit-board-repair_23-2148419141.jpg?t=st=1709382126~exp=1709385726~hmac=cf6aef048f23b55d5bf42e12cf71c9073d4586d2f972c5d680b203b1de3bcbb9&w=900' },
-    { id: 1, title: 'Painting Services', image: 'https://img.freepik.com/free-photo/plumbing-repair-service_181624-27146.jpg?w=900&t=st=1709380581~exp=1709381181~hmac=6db72d32fe96444c7fd21195d8c2b24bcfe2861e44113d8cc1734eed606c3a4c' },
-    { id: 1, title: 'Repair Services', image: 'https://img.freepik.com/free-photo/plumbing-repair-service_181624-27146.jpg?w=900&t=st=1709380581~exp=1709381181~hmac=6db72d32fe96444c7fd21195d8c2b24bcfe2861e44113d8cc1734eed606c3a4c' },
+    { id: 3, title: 'Plumbing Services', image: 'https://img.freepik.com/free-photo/plumbing-repair-service_181624-27146.jpg?w=900&t=st=1709380581~exp=1709381181~hmac=6db72d32fe96444c7fd21195d8c2b24bcfe2861e44113d8cc1734eed606c3a4c' },
     // ... more slides
   ];
 
@@ -30,7 +29,7 @@ const SlickSlider = () => {
       <Box sx={{ width: '100%', overflow: 'hidden' }}> {/* Example: Makes the slider smaller and caps its max width */}
         <Slider {...settings}>
           {slidesData.map(slide => (
-            <Box key={slide.id} sx={{ position: 'relative', width: '100%', height: '500px', overflow: 'hidden' }}>
+            <Box key={slide.id} sx={{ position: 'relative', width: '100%', height: '674px', overflow: 'hidden' }}>
               <img src={slide.image} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <Box
                 sx={{

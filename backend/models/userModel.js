@@ -46,6 +46,12 @@ const jobsHistorySchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
 
+    role: {
+        type: String,
+        required: true,
+        enum: ['client', 'service provider'],
+      },
+
     username: {
         type: String,
         trim: true,
@@ -61,26 +67,26 @@ const userSchema = new mongoose.Schema({
 
     fee: {
         type: Number,
-        default: 0
+        required: false,
     },
 
 
     serviceType: {
         type: String,
         trim: true,
-        required: [true, 'service type is required'],
+        required: false,
     },
 
-    Location: {
+    location: {
         type: String,
         trim: true,
-        required: [true, 'location is required'],
+        required: false,
     },
 
     description: {
         type: String,
         trim: true,
-        required: [true, 'description is required'],
+        required: false,
     },
     }
 

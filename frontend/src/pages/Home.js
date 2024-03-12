@@ -31,9 +31,39 @@ import PopularProjects from "../component/ProjectCard";
 import DrawerLeft from "../component/DrawerLeft";
 
 const Home = () => {
-  const { jobs, setUniqueLocation, pages, loading } = useSelector(
+  const { setUniqueLocation, pages, loading } = useSelector(
     (state) => state.loadJobs
   );
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        // Include credentials with the request
+        const response = await fetch("http://localhost:9000/api/allUsers", {
+          credentials: "include", // This line is added to include cookies with the request
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        console.log(response)
+        const data = await response.json();
+        console.log(data)
+        const taskers = data.users.filter((user) => user.role === 'service provider');
+
+        // console.log("data", data.users.filter((user) => user.role !== "admin"));
+        setUsers(taskers);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  console.log("all users", users);
 
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -53,13 +83,28 @@ useEffect(() => {
   const handleChangeCategory = (e) => {
     setCat(e.target.value);
   };
+  const itemsPerPage = 2;
+const [currentPage, setCurrentPage] = useState(1);
+
+// Calculate total pages
+const totalPages = Math.ceil(users.length / itemsPerPage);
+
+// Calculate the users to display on the current page
+const indexOfLastUser = currentPage * itemsPerPage;
+const indexOfFirstUser = indexOfLastUser - itemsPerPage;
+const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+// Handle change page
+const handleChangePage = (event, newPage) => {
+  setCurrentPage(newPage);
+};
 
   return (
-    <>
-    <DrawerLeft>
-      <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
-        
-        <Box
+   <>
+      <DrawerLeft>
+        <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
+          {/* Welcome section remains unchanged */}
+          <Box
           sx={{
             textAlign: "center",
             py: 8,
@@ -84,101 +129,123 @@ useEffect(() => {
               Discover trusted handyman services near you.
             </Typography>
             <SearchInputEl />
-            {/* <Button
-              variant="contained"
-              color="secondary"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Search Now
-            </Button> */}
-            {/* <Box mt={2}>
-              <Link to="/signup" style={{ textDecoration: "none" }}>
-                <Typography sx={{ color: "secondary.main" }}>
-                  Don't have an account? Sign up
-                </Typography>
-              </Link>
-            </Box> */}
           </Container>
         </Box>
-        <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
-        {/* <Navbar /> */}
-        {/* ... existing search bar Box ... */}
-
-        <Container maxWidth="lg" sx={{ py: 5 }}>
-          <Grid container spacing={4}>
-            {/* Jobs and Popular Projects Section */}
-            <Grid item xs={12} md={8} lg={9} >
+          <Container maxWidth="lg" sx={{ py: 5 }}>
+            <Grid container spacing={4}>
               {/* Popular Projects Section */}
-              <Box display="flex" justifyContent="center" marginBottom="50px">
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
-                  Popular Projects
-                </Typography>
-              </Box>
-              <Grid container spacing={4} justifyContent="center">
-                <PopularProjects />
-              </Grid>
-              </Grid>
-
-              <Grid item xs={12} lg={7}>
-              {/* Jobs Listing */}
-              {loading ? (
-                <LoadingBox />
-              ) : (
-                <Box>
-                  {/* Conditionally render jobs or no results message */}
-                  {jobs && jobs.length === 0 ? (
-                    <Typography variant="h6">No result found!</Typography>
-                  ) : (
-                    jobs.map((job, i) => (
-                      <CardElement key={i} {...job} />
-                    ))
-                  )}
-                  <Pagination
-                    // Pagination props
-                  />
-                </Box>
-              )}
-            </Grid>
-
-            {/* Filter by Section */}
-            <Grid item xs={12} md={4} lg={3}>
-            <Card sx={{ position: 'sticky', top: 80 }}> {/* Adjust top as necessary */}
-                <CardContent>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "600", mb: 2, color: palette.primary.main }}
-                  >
-                    Filter by
+              <Grid item xs={12} md={8} lg={9}>
+                <Box display="flex" justifyContent="center" marginBottom="50px">
+                  <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
+                    Popular Projects
                   </Typography>
-                  <SelectComponent
-                    handleChangeCategory={handleChangeCategory}
-                    cat={cat}
-                  />
-                  <MenuList>
-                    {setUniqueLocation &&
-                      setUniqueLocation.map((location, i) => (
-                        <MenuItem key={i}>
-                          <ListItemIcon>
-                            <LocationOnIcon fontSize="small" />
-                          </ListItemIcon>
-                          <Typography variant="body2">
-                            <Link to={`/search/location/${location}`}>
-                              {location}
-                            </Link>
+                </Box>
+                <Grid container spacing={4} justifyContent="center">
+                  <PopularProjects />
+                </Grid>
+              </Grid>
+
+              {/* Service Providers Section */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Grid container spacing={2}>
+                  {currentUsers.map((user) => (
+                    <Grid item xs={12} sm={6} key={user._id}>
+                      <Card
+                        sx={{
+                          ':hover': {
+                            transform: 'scale(1.01)',
+                            transition: 'transform 1s ease-in-out',
+                          },
+                        }}
+                      >
+                        <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+                          {/* Location above the username */}
+                          <Box sx={{ display: 'flex', alignItems: 'center', fontSize: 12, color: palette.primary.main, mt: 1, mb: 2 }}>
+                            <LocationOnIcon sx={{ fontSize: 'inherit', mr: 0.5 }} />
+                            <Typography component="span" sx={{ fontWeight: 'bold' }}>
+                              {user.location}
+                            </Typography>
+                          </Box>
+                          
+                          {/* Username with larger size */}
+                          <Typography variant="h6" sx={{ mt: 1, mb: 2, fontWeight: 'bold' }}>
+                            {user.username}
                           </Typography>
-                        </MenuItem>
-                      ))}
-                  </MenuList>
-                </CardContent>
-              </Card>
+                          
+                          {/* Additional user details */}
+                          <Typography variant="body2">Fee: {user.fee}</Typography>
+                          <Typography variant="body2">Service Type: {user.serviceType}</Typography>
+                          <Typography variant="body2">Description: {user.description}</Typography>
+                          
+                          {/* Book Now button */}
+                          <Button 
+                            variant="contained" 
+                            sx={{ mt: 2, textDecoration: 'none', color: 'white' }} 
+                            component={Link} 
+                            to="/booking"
+                          >
+                            Book Now
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+                {/* Pagination Control */}
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                  <Pagination count={totalPages} page={currentPage} onChange={handleChangePage} />
+                </Box>
+              </Grid>
+
+              {/* Filter Section */}
+              <Grid item xs={12} md={4} lg={3}>
+              <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={{ xs: 1, sm: 2, md: 4 }}
+                    >
+                        <Box sx={{ flex: 2, p: 2 }}>
+                            <Card sx={{ minWidth: 150, mb: 3, mt: 3, p: 2, bgcolor: palette.primary.white }}>
+                                <Box sx={{ pb: 2 }}>
+                                    <Typography component="h4" sx={{ color: palette.secondary.main, fontWeight: 600 }}>
+                                        Filter service provider by category
+                                    </Typography>
+                                </Box>
+                                <SelectComponent handleChangeCategory={handleChangeCategory} cat={cat} />
+
+                            </Card>
+
+                            {/* jobs by location */}
+                            <Card sx={{ minWidth: 150, mb: 3, mt: 3, p: 2, bgcolor: palette.primary.white }}>
+                                <Box sx={{ pb: 2 }}>
+                                    {/* <h4>Filter by category</h4> */}
+                                    <Typography component="h4" sx={{ color: palette.secondary.main, fontWeight: 600 }}>
+                                        Filter service provider by location
+                                    </Typography>
+                                    <MenuList>
+                                        {
+                                            setUniqueLocation && setUniqueLocation.map((location, i) => (
+                                                <MenuItem key={i}>
+                                                    <ListItemIcon>
+                                                        <LocationOnIcon sx={{ color: palette.secondary.main, fontSize: 18 }} />
+                                                    </ListItemIcon>
+                                                    <Link style={{ color: palette.secondary.main }} to={`/search/location/${location}`}>{location}</Link>
+                                                </MenuItem>
+
+                                            ))
+                                        }
+
+                                    </MenuList>
+
+                                </Box>
+                            </Card>
+                        </Box>
+                      </Stack>
+              </Grid>
             </Grid>
-            </Grid>
-          {/* </Grid> */}
-        </Container>
-      </Box>
-      </Box>
+          </Container>
+        </Box>
       </DrawerLeft>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

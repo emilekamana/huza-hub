@@ -6,7 +6,8 @@ import Navbarr from "../component/Navbar2";
 import SlickSlider from "../component/SlickSlider";
 import TaskerSuggestions from "../component/TaskerSuggestions";
 import HowItWorks from "../component/HowItWorks";
-import Services from "../component/Services"; // Import the Services component
+import Services from "../component/Services"; 
+import Footer from "../component/Footer";
 
 const LandingPage = () => {
   const theme = useTheme();
@@ -43,12 +44,12 @@ const LandingPage = () => {
               to="/register"
               style={{ textDecoration: "none", color: "white" }}
             >
-              Request for taskers
+              Request for service providers
             </Link>
           </Button>
         </Box>
         
-        <Container maxWidth="xl" sx={{ py: -1 }}>
+        <Container maxWidth="xl" sx={{ py: 10 }}>
           <Grid container spacing={4} alignItems="stretch">
             <Services /> {/* Use the Services component */}
             <Grid item xs={12} md={8}>
@@ -62,7 +63,7 @@ const LandingPage = () => {
         </Container>
         {/* Add additional content sections here as needed */}
       </Box>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

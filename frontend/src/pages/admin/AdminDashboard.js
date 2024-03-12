@@ -9,14 +9,21 @@ import { data, options } from './data/data'
 import { LocalizationProvider, DatePicker } from '@mui/lab';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { TextField } from '@mui/material';
+import DrawerLeft from '../../component/DrawerLeft';
 import React, { useState } from 'react';
+import Footer from '../../component/Footer';
 
 
 const AdminDashboard = () => {
     const [selectedDate, setSelectedDate] = useState(null);
     return (
         <>
-            <Box>
+        <DrawerLeft>
+            <Box sx={{
+                display: 'flex', 
+                flexDirection: 'column', 
+                minHeight: '100vh',
+            }}>
                 <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
                     Dashboard
                 </Typography>
@@ -62,6 +69,8 @@ const AdminDashboard = () => {
                     />
                 </LocalizationProvider>
             </Box>
+        </DrawerLeft>
+        <Footer />
         </>
     )
 }

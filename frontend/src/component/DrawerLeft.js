@@ -89,9 +89,9 @@ const DrawerLeft = ({ children }) => {
   if(userInfo){
     menuItems = [
       
-      { text: 'Home', icon: <HomeIcon /> , path: '/home'},
+      userInfo.role == "client" ? { text: 'Home', icon: <HomeIcon />, path: '/home' }:{ text: 'Home', icon: <Dashboard />, path: '/hometasker' },
       { text: 'Notifications', icon: <NotificationsIcon /> , path: '/notification'},
-      userInfo.role == 0? { text: 'Tasks Booked', icon: <Dashboard />, path: '/userdashboard' }:{ text: 'Tasks Booked', icon: <Dashboard />, path: '/admindashboard' },
+      userInfo.role == "client" ? { text: 'History', icon: <Dashboard />, path: '/history' }:{ text: 'Dashboard', icon: <Dashboard />, path: '/admindashboard' },
       
     ]
   }
@@ -206,7 +206,7 @@ const DrawerLeft = ({ children }) => {
 
               <ListItem disablePadding>
                 <ListItemButton onClick={logOutUser}>
-                  <ListItemText primary={"Log in"} />
+                  <ListItemText primary={"Logout"} />
                 </ListItemButton>
             </ListItem>
               }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, TextField, Typography, Linkk } from '@mui/material';
+import { Box, Button, TextField, Typography, Link } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
@@ -29,7 +29,7 @@ const LogIn = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values, actions) => {
-            dispatch(userSignInAction(values));
+          dispatch(userSignInAction({...values, role:"client"}));
             // Here you would navigate to the dashboard or other appropriate page on successful login
             actions.resetForm();
             navigate('/home');
@@ -65,7 +65,7 @@ const LogIn = () => {
               <LockOpenIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
-              Sign in to HuzaHub
+              Sign in as a Client
             </Typography>
             <TextField
               margin="normal"
