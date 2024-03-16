@@ -11,7 +11,7 @@ const Footer = () => {
     const { palette } = useTheme();
 
   return (
-    <Box component="footer" sx={{ bgcolor: palette.primary.main, color: 'white', py: 3}}>
+    <Box id='footer' component="footer" sx={{ bgcolor: palette.primary.main, color: 'white', py: 3}}>
       <Container maxWidth="lg">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={4}>

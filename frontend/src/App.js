@@ -57,6 +57,8 @@ const App = () => {
   const { userInfo } = useSelector(state => state.signIn);
   const theme = useMemo(() => createTheme(themeColors(mode)), [mode]);
 
+
+
   return (
     <>
       <ToastContainer />
@@ -84,14 +86,18 @@ const App = () => {
               <Route path="/userdashboard" element={<UserDashboard />} />
               <Route path="/admindashboard" element={<AdminDashboard />} />
               <Route path="/home" element={
+                <Home />
+               } />
+              {/* <Route path="/home" element={
                 userInfo ?
                 <Home />
                 : userInfo?.role == "client" ?
                 <LandingPage />
                 :
                 <HomeTasker />
+                
               
-              } />
+              } /> */}
               <Route path="/admindashboard" element={<AdminDashboard />} />
               <Route path="/booking" element={<BookingPage />} />
               <Route

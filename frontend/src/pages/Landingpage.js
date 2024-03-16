@@ -2,30 +2,39 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbarr from "../component/Navbar2";
+import NavBar from "../component/Navbar2";
 import SlickSlider from "../component/SlickSlider";
 import TaskerSuggestions from "../component/TaskerSuggestions";
 import HowItWorks from "../component/HowItWorks";
 import Services from "../component/Services"; 
 import Footer from "../component/Footer";
+import Services2 from "../component/Services2";
 
 const LandingPage = () => {
   const theme = useTheme();
   return (
     <>
-      <Box sx={{ minHeight: "100vh"}}>
-        <Navbarr />
-        <Box
+      <Box sx={{ minHeight: "100vh"}} >
+        <NavBar />
+
+        {/* bgcolor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay */}
+
+
+
+      <Box
           sx={{
             position: 'relative', // Needed for absolute positioning of children
             textAlign: "center",
             py: 8,
             color: "white",
-            height: "90vh",
+            height: "80vh",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+           
+            
+            
           }}
         >
           {/* SlickSlider as a background */}
@@ -36,22 +45,42 @@ const LandingPage = () => {
           <Typography variant="h2" sx={{ mb: 10, zIndex: 1, fontWeight: 'bold' }}>
             Welcome to HuzaHub!
           </Typography>
-          <Button
-            variant="contained"
-            sx={{ mb: 10, bgcolor: theme.palette.primary.main, zIndex: 1 }}
-          >
-            <Link
-              to="/register"
-              style={{ textDecoration: "none", color: "white" }}
+
+          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+            <Button
+              variant="contained"
+              sx={{ mb: 10, bgcolor: theme.palette.primary.main, zIndex: 1,  }}
             >
-              Request for service providers
-            </Link>
-          </Button>
+              <Link
+                to="/register"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Request for service 
+              </Link>
+            </Button>
+
+            <Button
+              variant="outlined"
+
+              sx={{ mb: 10, zIndex: 1, borderColor: 'white', ":hover": { bgcolor: theme.palette.primary.main, color: 'white'} }}
+            >
+              <Link
+                to="/register"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Start Working
+              </Link>
+            </Button>
+          </Box>
         </Box>
         
+
+            
+        
         <Container maxWidth="xl" sx={{ py: 10 }}>
-          <Grid container spacing={4} alignItems="stretch">
-            <Services /> {/* Use the Services component */}
+          <Grid container  alignItems="stretch">
+            {/* <Services />  */}
+            <Services2 /> 
             <Grid item xs={12} md={8}>
               <HowItWorks />
               {/* The SlickSlider is moved to the top Box */}

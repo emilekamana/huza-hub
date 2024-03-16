@@ -58,7 +58,7 @@ const ServiceProvider = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        height: "100%",
+        height: "100vh",
         bgcolor: "background.default",
       }}>
       <Box
@@ -70,114 +70,127 @@ const ServiceProvider = () => {
           borderRadius: "10px",
           boxShadow: 3,
           width: "100%",
-          maxWidth: "340px",
+          maxWidth: "550px",
           bgcolor: "background.paper",
         }}
         component="form"
         onSubmit={formik.handleSubmit}>
+
+          
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOpenIcon />
         </Avatar>
         <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
           Sign up as a Service Provider
         </Typography>
-        <TextField
-          fullWidth
-          id="username"
-          name="username"
-          label="Username"
-          value={formik.values.username}
-          onChange={formik.handleChange}
-          error={formik.touched.username && Boolean(formik.errors.username)}
-          helperText={formik.touched.username && formik.errors.username}
-          sx={{ mb: 3 }}
-        />
-        <TextField
-          fullWidth
-          id="password"
-          name="password"
-          label="Password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-          sx={{ mb: 3 }}
-        />
-        <TextField
-          fullWidth
-          id="repeatPassword"
-          name="repeatPassword"
-          label="Repeat password"
-          type="password"
-          value={formik.values.repeatPassword}
-          onChange={formik.handleChange}
-          error={
-            formik.touched.repeatPassword &&
-            Boolean(formik.errors.repeatPassword)
-          }
-          helperText={
-            formik.touched.repeatPassword && formik.errors.repeatPassword
-          }
-          sx={{ mb: 3 }}
-        />
-        <TextField
-          margin="normal"
-          fullWidth
-          id="location"
-          name="location"
-          label="Location"
-          value={formik.values.location}
-          onChange={formik.handleChange}
-          error={formik.touched.location && Boolean(formik.errors.location)}
-          helperText={formik.touched.location && formik.errors.location}
-        />
-        <TextField
-          margin="normal"
-          fullWidth
-          id="fee"
-          name="fee"
-          label="Fee"
-          type="number"
-          value={formik.values.fee}
-          onChange={formik.handleChange}
-          error={formik.touched.fee && Boolean(formik.errors.fee)}
-          helperText={formik.touched.fee && formik.errors.fee}
-        />
-        <TextField
-          select
-          label="Service Type"
-          id="serviceType"
-          name="serviceType"
-          value={formik.values.serviceType}
-          onChange={formik.handleChange}
-          margin="normal"
-          fullWidth>
-          {[
-            "Appliance Maintenance",
-            "Plumbing Services",
-            "Electricity Services",
-          ].map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-        <TextField
-          margin="normal"
-          fullWidth
-          id="description"
-          name="description"
-          label="Description"
-          multiline
-          rows={2}
-          value={formik.values.description}
-          onChange={formik.handleChange}
-          error={
-            formik.touched.description && Boolean(formik.errors.description)
-          }
-          helperText={formik.touched.description && formik.errors.description}
-        />
+
+    <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+        <Box sx={{ width: '90%' }}>
+        
+          <TextField
+           fullWidth
+            id="username"
+            name="username"
+            label="Username"
+            value={formik.values.username}
+            onChange={formik.handleChange}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
+            sx={{ mb: 3, }}
+          />
+          <TextField
+            fullWidth
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={formik.touched.password && formik.errors.password}
+            sx={{ mb: 3 }}
+          />
+          <TextField
+            fullWidth
+            id="repeatPassword"
+            name="repeatPassword"
+            label="Repeat password"
+            type="password"
+            value={formik.values.repeatPassword}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.repeatPassword &&
+              Boolean(formik.errors.repeatPassword)
+            }
+            helperText={
+              formik.touched.repeatPassword && formik.errors.repeatPassword
+            }
+            sx={{ mb: 3 }}
+          />
+        </Box>
+       <Box sx={{ width: '90%' }}>
+          <TextField
+            fullWidth
+            id="location"
+            name="location"
+            label="Location"
+            value={formik.values.location}
+            onChange={formik.handleChange}
+            error={formik.touched.location && Boolean(formik.errors.location)}
+            helperText={formik.touched.location && formik.errors.location}
+            sx={{ mb: 3,  }}
+          />
+          <TextField
+
+            fullWidth
+            id="fee"
+            name="fee"
+            label="Fee"
+            type="number"
+            value={formik.values.fee}
+            onChange={formik.handleChange}
+            error={formik.touched.fee && Boolean(formik.errors.fee)}
+            helperText={formik.touched.fee && formik.errors.fee}
+            sx={{ mb: 3 }}
+          />
+          <TextField
+           fullWidth
+            select
+            label="Service Type"
+            id="serviceType"
+            name="serviceType"
+            value={formik.values.serviceType}
+            onChange={formik.handleChange}
+            sx={{ mb: 3 }}
+            >
+            {[
+              "Appliance Maintenance",
+              "Plumbing Services",
+              "Electricity Services",
+            ].map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+            
+          </TextField>
+          {/* <TextField
+            margin="normal"
+            
+            id="description"
+            name="description"
+            label="Description"
+            multiline
+            rows={2}
+            value={formik.values.description}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.description && Boolean(formik.errors.description)
+            }
+            helperText={formik.touched.description && formik.errors.description}
+          /> */}
+        </Box>
+      </Box>
         <Button
           type="submit"
           fullWidth

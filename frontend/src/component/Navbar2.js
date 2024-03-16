@@ -13,9 +13,10 @@ const Navbarr = () => {
 
   return (
     <AppBar position="static" elevation={0} sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}`, bgcolor: palette.primary.main}}>
-      <Toolbar sx={{ justifyContent: 'flex-start', padding: '0 24px' }}>
+      {/* justifyContent: 'flex-start', */}
+      <Toolbar sx={{  padding: '0 24px', justifyContent: 'space-between', }}>
         {/* Logo and brand name */}
-        <Box sx={{ display: 'flex', alignItems: 'center', marginRight: '1000px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center',  }}>
             {/* Adjust the right margin as needed */}
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex', color: 'white' }, mr: 1 }} />
           <Typography
@@ -39,16 +40,14 @@ const Navbarr = () => {
         {/* Navigation Links */}
         <nav>
           <Button sx={{ my: 1, mx: 1.5 , color: 'white', fontWeight: 'bold'}}>
-            <Link
-              to="/footer"
+            <a
+            href="#footer"
               style={{ textDecoration: "none", color: "white" }}
             >
                 About us
-            </Link>
+            </a>
           </Button>
-        </nav>
-
-        {/* Action buttons */}
+            {/* Action buttons */}
         <Button component={RouterLink} to="/login" sx={{
           my: 1,
           mx: 1.5,
@@ -78,6 +77,7 @@ const Navbarr = () => {
         }}>
           Start Working
         </Button>
+        </nav>
       </Toolbar>
     </AppBar>
   );

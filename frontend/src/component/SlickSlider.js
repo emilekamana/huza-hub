@@ -26,25 +26,26 @@ const SlickSlider = () => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       {/* Adjust the width of the slider here */}
-      <Box sx={{ width: '100%', overflow: 'hidden' }}> {/* Example: Makes the slider smaller and caps its max width */}
+      <Box sx={{ width: '100%', overflow: 'hidden', }}> {/* Example: Makes the slider smaller and caps its max width */}
         <Slider {...settings}>
           {slidesData.map(slide => (
-            <Box key={slide.id} sx={{ position: 'relative', width: '100%', height: '674px', overflow: 'hidden' }}>
+            <Box key={slide.id} sx={{ position: 'relative', width: '100%', height: '674px', overflow: 'hidden'}}>
               <img src={slide.image} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <Box
                 sx={{
+                  bgcolor: 'rgba(0, 0, 0, 0.5)',
                   position: 'absolute',
                   bottom: 0,
-                  width: '100%', // Ensure the overlay box covers the image width
-                  bgcolor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay
+                  width: '100%',
                   color: 'white',
                   padding: '10px',
                   display: 'flex',
                   justifyContent: 'center',
-                  alignItems: 'center',
+                  alignItems: 'flex-end',
+                  height: '100%',
                 }}
               >
-                <Typography variant="h6">{slide.title}</Typography>
+                <Typography variant="h6" >{slide.title}</Typography>
               </Box>
             </Box>
           ))}

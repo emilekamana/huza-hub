@@ -31,7 +31,7 @@ const HowItWorks = () => {
           objectFit: 'cover' 
         }} 
       />
-      <Grid container spacing={2} justifyContent="center" alignItems="center" style={{ position: 'relative' }}>
+      <Grid container maxWidth='xl' spacing={2} justifyContent="center" alignItems="center" style={{ position: 'relative' }}>
         <Grid item xs={12} md={4}>
           <Typography variant="h5" gutterBottom align={matches ? 'left' : 'center' } sx={{fontWeight: 'bold'}}>
             How it works
