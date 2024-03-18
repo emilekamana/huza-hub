@@ -40,6 +40,7 @@ import Payment from "./pages/Payment";
 import Footer from "./component/Footer";
 import Signin from "./pages/Signin";
 import History from "./pages/History";
+import ConfirmTask from "./pages/Confirm";
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -72,6 +73,7 @@ const App = () => {
               <Route path="/search/location/:location" element={<Home />} />
               <Route path="/search/:keyword" element={<Home />} />
               <Route path="/login" element={<LogIn />} />
+              <Route path="/confirm" element={<ConfirmTask />} />
               <Route path="/serviceProvider" element={<ServiceProvider />} />
               <Route path="/services" element={<Services />} />
               <Route path="/notification" element={<Notification />} />
