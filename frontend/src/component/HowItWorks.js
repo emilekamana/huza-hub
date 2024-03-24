@@ -42,13 +42,13 @@ const HowItWorks = () => {
                                     <ListItemIcon>
                                         <ListAltIcon color="secondary" />
                                     </ListItemIcon>
-                                    <ListItemText primary="Choose a Tasker by price, skills, and reviews." />
+                                    <ListItemText primary="Choose a Service provider by price, skills, and reviews." />
                                 </ListItem>
                                 <ListItem>
                                 <ListItemIcon>
                                     <TodayIcon color="secondary" />
                                 </ListItemIcon>
-                                <ListItemText primary="Schedule a Tasker as early as today." />
+                                <ListItemText primary="Schedule a Service provider as early as today." />
                                 </ListItem>
                 <ListItem>
                 <ListItemIcon>

@@ -50,17 +50,32 @@ exports.allUsers = async (req, res, next) => {
 //show single user
 exports.singleUser = async (req, res, next) => {
     try {
+        // Extract the ID from the request parameters
         const user = await User.findById(req.params.id);
+        
+        // Check if the user was found
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Respond with the user if found
         res.status(200).json({
             success: true,
             user
-        })
-        next();
+        });
 
     } catch (error) {
-        return next(error);
+        // Handle potential errors, such as invalid ID formats
+        res.status(500).json({
+            success: false,
+            message: "Server error",
+            error: error.message
+        });
     }
-}
+};
 
 
 //edit user

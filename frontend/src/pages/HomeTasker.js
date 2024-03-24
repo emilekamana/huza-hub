@@ -1,95 +1,154 @@
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import React, { useState } from "react";
 import {
   Box,
-  Card,
-  CardContent,
   Container,
-  Grid,
-  ListItemIcon,
-  MenuItem,
-  MenuList,
-  Pagination,
   Typography,
-  useTheme,
+  TextField,
+  Tooltip,
+  Popover, 
+  List, 
+  ListItem, 
+  ListItemText,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-// import { Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import CardElement from "../component/CardElement";
-import LoadingBox from "../component/LoadingBox";
-import Navbar from "../component/Navbar";
-import PopularProjects from "../component/ProjectCard";
-import SearchInputEl from "../component/SearchInputEl";
-import SelectComponent from "../component/SelectComponent";
-import { jobLoadAction } from "../redux/actions/jobAction";
-import { jobTypeLoadAction } from "../redux/actions/jobTypeAction";
-import DrawerLeft from "../component/DrawerLeft";
+import { LocalizationProvider, StaticDatePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { isSameDay } from 'date-fns';
 import Footer from "../component/Footer";
+import DrawerLeft from "../component/DrawerLeft";
+
+// Sample bookings for the demonstration
+// This should come from your backend API in a real application
+const sampleBookings = {
+  '2024-12-14': ['Morning 9-12', 'Afternoon 12-5'],
+  '2024-12-15': ['Evening 5-7'],
+};
 
 const HomeTasker = () => {
-  const { jobs, setUniqueLocation, pages, loading } = useSelector(
-    (state) => state.loadJobs
-  );
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const { palette } = useTheme();
-  const dispatch = useDispatch();
-  const { keyword, location } = useParams();
+  const renderDayContent = (day, selectedDate, inCurrentMonth, dayComponent) => {
+    const formattedDate = day.toISOString().split('T')[0];
+    const isBooked = sampleBookings[formattedDate];
 
-  const [page, setPage] = useState(1);
-  const [cat, setCat] = React.useState("");
-
-  useEffect(() => {
-    dispatch(jobLoadAction(page, keyword, cat, location));
-  }, [dispatch, page, keyword, cat, location]);
-
-  useEffect(() => {
-    dispatch(jobTypeLoadAction());
-  }, [dispatch]);
-
-  const handleChangeCategory = (e) => {
-    setCat(e.target.value);
+    return (
+      <Tooltip title={isBooked ? 'Booked' : 'Available'}>
+        {dayComponent}
+      </Tooltip>
+    );
   };
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event, date) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedDate(date);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const formattedDate = selectedDate.toISOString().split('T')[0];
+  const bookingsForSelectedDate = sampleBookings[formattedDate];
 
   return (
     <>
-    <DrawerLeft>
-      <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
-        <Navbar />
-        <Box
-          sx={{
-            textAlign: "center",
-            py: 8,
-            // background: 'url("https://cdn.pixabay.com/photo/2018/03/10/11/54/tool-3213915_960_720.jpg")',
-            // background: 'url("https://images.pexels.com/photos/4491918/pexels-photo-4491918.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")', // Replace with your actual image path
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            color: "white",
-          }}>
-          <Container maxWidth="sm">
-            <Typography
-              variant="h2"
-              component="h1"
-              color="primary.main"
-              gutterBottom
-              sx={{ fontWeight: "bold" }}>
-              Welcome Tasker!
-            </Typography>
-            <Typography
-              variant="h5"
-              component="h2"
+      <DrawerLeft>
+        <Box sx={{ bgcolor: "#fafafa", minHeight: "100vh" }}>
+            <Box
               sx={{
-                mb: 2,
-                color: "black",
-                fontWeight: "bold",
-                marginBottom: "100px",
+                textAlign: "center",
+                py: 8,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                color: "white",
               }}>
-              Discover trusted handyman services near you.
-            </Typography>
-          </Container>
+              <Container maxWidth="sm">
+                <Typography
+                  variant="h2"
+                  component="h1"
+                  color="primary.main"
+                  gutterBottom
+                  sx={{ fontWeight: "bold" }}>
+                  Welcome Service Provider!
+                </Typography>
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  sx={{
+                    mb: 2,
+                    color: "black",
+                    fontWeight: "bold",
+                    marginBottom: "100px",
+                  }}>
+                  Provide services easily with HuzaHub.
+                </Typography>
+              
+              <Box>
+                {/* <Typography variant="h4" gutterBottom>
+                  Availability
+                </Typography> */}
+                <Typography variant="subtitle1" gutterBottom sx={{
+                  fontWeight: 'bold',
+                  color: 'black'
+                }}>
+                  What's your daily availability to take bookings with potential clients?
+                </Typography>
+
+                {/* Availability Preview - Calendar */}
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <StaticDatePicker
+                    displayStaticWrapperAs="desktop"
+                    openTo="day"
+                    value={selectedDate}
+                    onChange={(newValue) => {
+                      setSelectedDate(newValue);
+                    }}
+                    onDayClick={(newValue, event) => handleClick(event, newValue)}
+                    renderDay={(day, selectedDate, inCurrentMonth, dayComponent) => {
+                      const formattedDate = day.toISOString().split('T')[0];
+                      const isBooked = !!sampleBookings[formattedDate];
+                      const style = isBooked ? { backgroundColor: 'lightblue', borderRadius: '50%' } : {};
+
+                      return (
+                        <Box sx={{ ...style }}>
+                          {dayComponent}
+                        </Box>
+                      );
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                </LocalizationProvider>
+                
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'center',
+                  }}
+                >
+                  <List sx={{ minWidth: 220 }}>
+                    {bookingsForSelectedDate ? bookingsForSelectedDate.map((timeSlot, index) => (
+                      <ListItem button key={index}>
+                        <ListItemText primary={timeSlot} />
+                      </ListItem>
+                    )) : <ListItem button><ListItemText primary="No bookings" /></ListItem>}
+                  </List>
+                </Popover>
+              </Box>
+            </Container>
+          </Box>
         </Box>
-      </Box>
-      <Footer />
+        <Footer />
       </DrawerLeft>
     </>
   );

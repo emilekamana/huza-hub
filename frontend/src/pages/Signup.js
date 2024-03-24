@@ -13,10 +13,10 @@ const validationSchema = yup.object({
     .string("Enter your password")
     .min(8, "Password should be of minimum 8 characters length")
     .required("Password is required"),
-  repeatPassword: yup
-    .string("Repeat your password")
-    .required("Please confirm your password")
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  // repeatPassword: yup
+  //   .string("Repeat your password")
+  //   .required("Please confirm your password")
+  //   .oneOf([yup.ref("password"), null], "Passwords must match"),
   location: yup.string("Enter your location").required("location is required"),
   fee: yup.string("Enter your fee").required("fee is required"),
   serviceType: yup
@@ -35,7 +35,7 @@ const ServiceProvider = () => {
     initialValues: {
       username: "",
       password: "",
-      repeatPassword: "",
+      // repeatPassword: "",
       location: "",
       fee: "",
       serviceType: "",
@@ -47,7 +47,7 @@ const ServiceProvider = () => {
       console.log(values);
       dispatch(userSignUpAction({ ...values, role: "service provider" }));
       actions.resetForm();
-      navigate("/signin");
+      navigate("/hometasker");
     },
   });
 
@@ -108,25 +108,25 @@ const ServiceProvider = () => {
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-            sx={{ mb: 3 }}
+            sx={{ mb: 1 }}
           />
           <TextField
+            margin="normal"
             fullWidth
-            id="repeatPassword"
-            name="repeatPassword"
-            label="Repeat password"
-            type="password"
-            value={formik.values.repeatPassword}
+            id="description"
+            name="description"
+            label="Description"
+            multiline
+            rows={1}
+            value={formik.values.description}
             onChange={formik.handleChange}
             error={
-              formik.touched.repeatPassword &&
-              Boolean(formik.errors.repeatPassword)
+              formik.touched.description && Boolean(formik.errors.description)
             }
-            helperText={
-              formik.touched.repeatPassword && formik.errors.repeatPassword
-            }
-            sx={{ mb: 3 }}
+            helperText={formik.touched.description && formik.errors.description}
+            
           />
+
         </Box>
        <Box sx={{ width: '90%' }}>
           <TextField
@@ -138,7 +138,7 @@ const ServiceProvider = () => {
             onChange={formik.handleChange}
             error={formik.touched.location && Boolean(formik.errors.location)}
             helperText={formik.touched.location && formik.errors.location}
-            sx={{ mb: 3,  }}
+            sx={{ mb: 3}}
           />
           <TextField
 
@@ -164,9 +164,12 @@ const ServiceProvider = () => {
             sx={{ mb: 3 }}
             >
             {[
-              "Appliance Maintenance",
-              "Plumbing Services",
+              "Cleaning services",
               "Electricity Services",
+              "Furniture Assembly",
+              "Gardening services",
+              "Plumbing Services",
+              "Heavy lifting Services",
             ].map((option) => (
               <MenuItem key={option} value={option}>
                 {option}
@@ -174,21 +177,6 @@ const ServiceProvider = () => {
             ))}
             
           </TextField>
-          {/* <TextField
-            margin="normal"
-            
-            id="description"
-            name="description"
-            label="Description"
-            multiline
-            rows={2}
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.description && Boolean(formik.errors.description)
-            }
-            helperText={formik.touched.description && formik.errors.description}
-          /> */}
         </Box>
       </Box>
         <Button

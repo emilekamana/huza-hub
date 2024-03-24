@@ -22,7 +22,7 @@ const TaskerSuggestions = () => {
   return (
     <Box sx={{ width: '70%', bgcolor: 'background.paper' }}>
       <Typography variant="h5" sx={{ pl: 2, pt: 2, pb: 1, fontWeight: 'bold' }}>
-        Hire a Tasker
+        Hire a Service Provider
       </Typography>
       <List>
         {suggestions.map((suggestion, index) => (

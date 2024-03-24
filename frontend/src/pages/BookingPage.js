@@ -5,31 +5,52 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Link} from "react-router-dom";
+import { Snackbar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
-
+  const [address, setAddress] = useState('');
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+  };
+  const navigate = useNavigate();
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+  const handleBooking = () => {
+    // Here you'd normally validate the form fields
+    // For the sake of this example, let's assume they are all filled in
+    if (address && selectedDate && selectedTime) {
+      // Trigger the Snackbar
+      setBookingSuccess(true);
+  
+      // Here you would usually send the booking data to your server
+      // ...
+  
+      // Optionally reset the form or navigate the user to another page
+      setTimeout(() => {
+        navigate('/payment');
+      }, 3000);
+    }
+  }
+  const handleCloseSnackbar = () => {
+    setBookingSuccess(false);
+  };
+  
   return (
-    <Box sx={{ p: 2, maxWidth: 400, mx: 'auto', bgcolor: 'background.paper', borderRadius: 2 }}>
-      <Typography variant="h5" gutterBottom component="div" sx={{ textAlign: 'center' }}>
-        Book a handyman
+    <Box sx={{ p: 2, maxWidth: 400, mx: 'auto', bgcolor: 'background.paper', borderRadius: 2, mt: 10 }}>
+      <Typography variant="h5" gutterBottom component="div" sx={{ textAlign: 'center', fontWeight: 'bold' }}>
+        Book a service provider
       </Typography>
       {/* <Typography gutterBottom>Plumbing Services</Typography> */}
       <Stack direction="column" spacing={2}>
         <TextField
-          select
-          label="Number"
-          value="1"
-          // handleChange function here
-          helperText="Please select the number of items to be worked on"
+          label="address"
+          value={address} 
+          onChange={handleAddressChange}
+          helperText="Please enter your address"
         >
-          <MenuItem value="1">1</MenuItem>
-          <MenuItem value="2">2</MenuItem>
-          <MenuItem value="3">3</MenuItem>
-          <MenuItem value="4">4</MenuItem>
-          <MenuItem value="5">5</MenuItem>
-          {/* More menu items */}
         </TextField>
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -48,14 +69,21 @@ const BookingPage = () => {
           />
         </LocalizationProvider>
 
-        <Button variant="contained" color="primary" sx={{ mt: 2 }}>
-          <Link
+        <Button variant="contained" color="primary" sx={{ mt: 2 }} onClick={handleBooking}>
+          {/* <Link
               to="/payment"
               style={{ textDecoration: "none", color: "white" }}
-          >
+          > */}
             Book
-          </Link>
+          {/* </Link> */}
         </Button>
+        <Snackbar
+          open={bookingSuccess}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+          message="Booking successful!"
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // This positions the snackbar at the top center.
+        />
       </Stack>
     </Box>
   );

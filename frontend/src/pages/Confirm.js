@@ -33,7 +33,7 @@ export default function ConfirmTask() {
     <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
       <Paper elevation={3} sx={{ p: 3, mt: 4 }}>
         <Typography variant="h4" align="center" gutterBottom>
-          Confirm task completion
+          Confirm service completion
         </Typography>
         <Typography variant="subtitle1" align="center" gutterBottom sx={{fontWeight: 'semi-bold' }}>
           Has the service been satisfactorily completed?

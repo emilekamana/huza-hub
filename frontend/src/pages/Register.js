@@ -44,7 +44,7 @@ const Register = () => {
       // dispatch(userSignUpAction(values));
       dispatch(userSignUpAction({...values, role:"client"}));
       actions.resetForm();
-      navigate("/login");
+      navigate("/home");
     },
   });
 

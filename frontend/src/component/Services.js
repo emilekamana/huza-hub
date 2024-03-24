@@ -1,71 +1,67 @@
-import React from 'react';
-import { Box, Grid, Card, CardMedia, CardContent, Typography, CardActionArea } from '@mui/material';
-// import { CardInfo } from '@mui/material';
+import React, { useEffect, useRef, useState } from "react";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
+import { motion } from "framer-motion";
+import { useTheme } from "@mui/material/styles";
 
-// Dummy data for the projects
-const projects = [
-{
-    title: 'Connect clients and service providers',
-    info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quam diam, imperdiet quis odio vitae, iaculis tempor nibh. Phasellus sem neque, auctor vel maximus eu, interdum rutrum nisl. Aliquam erat.',
-    
-},
-  {
-    title: 'Facilitate easy payment',
-    info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quam diam, imperdiet quis odio vitae, iaculis tempor nibh. Phasellus sem neque, auctor vel maximus eu, interdum rutrum nisl. Aliquam erat.',
-    
-  },
-  {
-    title: 'Make booking easy and fast',
-    info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quam diam, imperdiet quis odio vitae, iaculis tempor nibh. Phasellus sem neque, auctor vel maximus eu, interdum rutrum nisl. Aliquam erat.',
-    
-  },
-  {
-    title: 'Make booking easy and fast',
-    info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quam diam, imperdiet quis odio vitae, iaculis tempor nibh. Phasellus sem neque, auctor vel maximus eu, interdum rutrum nisl. Aliquam erat.',
-    
-  },
-  {
-    title: 'Make booking easy and fast',
-    info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quam diam, imperdiet quis odio vitae, iaculis tempor nibh. Phasellus sem neque, auctor vel maximus eu, interdum rutrum nisl. Aliquam erat.',
-    
-  },
-  {
-    title: 'Make booking easy and fast',
-    info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi quam diam, imperdiet quis odio vitae, iaculis tempor nibh. Phasellus sem neque, auctor vel maximus eu, interdum rutrum nisl. Aliquam erat.',
-    
-  },
+const ServiceCard = ({ service, index, variants }) => {
+  const theme = useTheme();
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
 
-  // Add more projects as needed
-];
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+  
+    // Ensures the element is there to be observed
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+  
+    // Cleanup function to unobserve
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
 
-const Services = () => {
-    return (
-            <Box sx={{ flexGrow: 1, padding: 3 }}>
-              <Box textAlign="center" sx={{ marginBottom: 4 }}>
-                <Typography variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
-                  What we do
-                </Typography>
-              </Box>
-              <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} justifyContent="center">
-                {projects.map((service, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Card sx={{ height: '100%', width: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                      <CardActionArea sx={{ height: '100%' }}>
-                        <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography gutterBottom variant="h6" component="div">
-                            {service.title}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {service.info}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          );
-        };
+  return (
+    <Grid item xs={12} sm={6} md={4} ref={ref}>
+      <motion.div
+        custom={index}
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={variants}
+      >
+        <Card
+          sx={{
+            cursor: 'pointer',
+            '&:hover': {
+              backgroundColor: theme.palette.primary.main,
+              color: 'white',
+              ".MuiCardContent-root": { color: "white" },
+            },
+            width: 300, // Adjust width to make the card square
+            height: 200, // Adjust height to make the card square
+          }}
+          onClick={() => console.log(`Clicked on ${service.title}`)}
+        >
+          <CardContent>
+            <Typography variant="h6" component="div" sx={{ fontWeight: "bold", textAlign: "center"}}>
+              {service.title}
+            </Typography>
+            <Typography variant="body2">
+              {service.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </Grid>
+  );
+};
 
-export default Services;
+export default ServiceCard;

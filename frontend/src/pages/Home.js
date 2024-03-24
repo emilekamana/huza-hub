@@ -1,5 +1,6 @@
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import {
+  Avatar,
   Box,
   Card,
   Container,
@@ -29,6 +30,8 @@ import { jobTypeLoadAction } from "../redux/actions/jobTypeAction";
 import SearchInputEl from "../component/SearchInputEl";
 import PopularProjects from "../component/ProjectCard";
 import DrawerLeft from "../component/DrawerLeft";
+import Cookies from 'js-cookie';
+import RatingBar from "../component/RatingBar";
 
 const Home = () => {
   const { pages, loading } = useSelector(
@@ -89,7 +92,7 @@ useEffect(() => {
   const handleChangeCategory = (e) => {
     setCat(e.target.value);
   };
-  const itemsPerPage = 2;
+  const itemsPerPage = 6;
 const [currentPage, setCurrentPage] = useState(1);
 
 // Calculate total pages
@@ -104,7 +107,7 @@ const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
 const handleChangePage = (event, newPage) => {
   setCurrentPage(newPage);
 };
-
+console.log(" hehehe", Cookies.get('token'))
   return (
    <>
       <DrawerLeft>
@@ -139,64 +142,87 @@ const handleChangePage = (event, newPage) => {
         </Box>
           <Container maxWidth="lg" sx={{ py: 5 }}>
             <Grid container spacing={4}>
-              {/* Popular Projects Section */}
-              <Grid item xs={12} md={8} lg={9}>
-                <Box display="flex" justifyContent="center" marginBottom="50px">
-                  <Typography variant="h4" gutterBottom sx={{ fontWeight: "bold" }}>
-                    Popular Projects
-                  </Typography>
-                </Box>
-                <Grid container spacing={4} justifyContent="center">
-                  <PopularProjects />
-                </Grid>
-              </Grid>
-
               {/* Service Providers Section */}
               <Grid item xs={12} md={8} lg={9}>
-                <Grid container spacing={2}>
-                  {currentUsers.map((user) => (
-                    <Grid item xs={12} sm={6} key={user._id}>
-                      <Card
-                        sx={{
-                          ':hover': {
-                            transform: 'scale(1.01)',
-                            transition: 'transform 1s ease-in-out',
-                          },
+              <Grid container spacing={3}>
+                {currentUsers.map((user) => (
+                  <Grid item xs={12} sm={6} md={4} key={user._id}>
+                    <Card
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        p: 2,
+                        ':hover': {
+                          transform: 'scale(1.01)',
+                          transition: 'transform 1s ease-in-out',
+                        },
+                        width: '100%',
+                      }}
+                    > 
+                    {/* <Grid sx={{height: "100"}}> */}
+                      <Avatar
+                        sx={{ 
+                          width: 80, 
+                          height: 80, 
+                          mt: -6,
+                          mb: 2,
+                          border: '3px solid white', 
+                          objectFit: 'cover',
                         }}
-                      >
-                        <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                          {/* Location above the username */}
-                          <Box sx={{ display: 'flex', alignItems: 'center', fontSize: 12, color: palette.primary.main, mt: 1, mb: 2 }}>
-                            <LocationOnIcon sx={{ fontSize: 'inherit', mr: 0.5 }} />
-                            <Typography component="span" sx={{ fontWeight: 'bold' }}>
-                              {user.location}
+                        src={user.avatarUrl} // Replace with the actual image path
+                        alt={user.username}
+                      />
+                      {/* </Grid> */}
+                      <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
+                        {user.username}
+                      </Typography>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        {user.description}
+                      </Typography>
+                      <Box sx={{ my: 2, width: '100%' }}>
+                        <Grid container spacing={1} justifyContent="space-between">
+                          <Grid >
+                            <Typography variant="subtitle2" gutterBottom>Fee</Typography>
+                            <Typography variant="text" sx={{ fontWeight: 'bold' }}>{user.fee}</Typography>
+                          </Grid>
+                          <Grid>
+                            <Typography variant="subtitle2" gutterBottom sx={{marginLeft: 5}}>
+                              Service
                             </Typography>
-                          </Box>
-                          
-                          {/* Username with larger size */}
-                          <Typography variant="h6" sx={{ mt: 1, mb: 2, fontWeight: 'bold' }}>
-                            {user.username}
-                          </Typography>
-                          
-                          {/* Additional user details */}
-                          <Typography variant="body2">Fee: {user.fee}</Typography>
-                          <Typography variant="body2">Service Type: {user.serviceType}</Typography>
-                          <Typography variant="body2">Description: {user.description}</Typography>
-                          
-                          {/* Book Now button */}
-                          <Button 
+                            <Typography variant="body2" sx={{ fontWeight: 'bold', whiteSpace: 'normal', textAlign: 'center' }}>
+                              {user.serviceType}
+                            </Typography>
+                          </Grid>
+
+                          <Grid >
+                            <Typography variant="subtitle2" gutterBottom>Location</Typography>
+                            <Typography variant="text" sx={{ fontWeight: 'bold' }}>{user.location}</Typography>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                      <Box sx={{ my: 1, width: '100%' }}>
+                        <Typography variant="caption" display="block" gutterBottom>Productivity</Typography>
+                        <Box sx={{ position: 'relative', display: 'block', width: '100%', bgcolor: 'lightgrey' }}>
+                          <Box sx={{ width: '65%', bgcolor: 'primary.main', height: 10 }} />
+                        </Box>
+                      </Box>
+                      {/* <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <RatingBar rating={user.rating} maxRating={5} />
+                      </Box> */}
+                      <Button 
                             variant="contained" 
                             sx={{ mt: 2, textDecoration: 'none', color: 'white' }} 
                             component={Link} 
                             to="/booking"
                           >
                             Book Now
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
+                      </Button>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+
                 {/* Pagination Control */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
                   <Pagination count={totalPages} page={currentPage} onChange={handleChangePage} />
@@ -247,6 +273,17 @@ const handleChangePage = (event, newPage) => {
                         </Box>
                       </Stack>
               </Grid>
+               {/* Popular Projects Section */}
+                <Grid item xs={12} md={8} lg={9}>
+                  <Box display="flex" justifyContent="center" marginBottom="50px">
+                    <Typography variant="h5" gutterBottom sx={{ fontWeight: "bold" }}>
+                      Popular Projects
+                    </Typography>
+                  </Box>
+                  <Grid container spacing={4} justifyContent="center">
+                    <PopularProjects />
+                  </Grid>
+                </Grid>
             </Grid>
           </Container>
         </Box>

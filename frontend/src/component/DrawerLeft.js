@@ -20,7 +20,8 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import Dashboard from '@mui/icons-material/Dashboard';
+import { AccountCircle } from '@mui/icons-material';
+import { History } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
@@ -28,8 +29,11 @@ import { useDispatch } from 'react-redux';
 import { toggleActionTheme } from '../redux/actions/themeAction';
 import LightMode from '@mui/icons-material/LightMode'; 
 import DarkMode from '@mui/icons-material/DarkMode';
+import Login from '@mui/icons-material/Login'
+import { Logout } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { userLogoutAction } from '../redux/actions/userAction'; 
+import LandingPage from '../pages/Landingpage';
 
 const drawerWidth = 240;
 
@@ -82,9 +86,9 @@ const DrawerLeft = ({ children }) => {
   if(userInfo){
     menuItems = [
       
-      userInfo.role == "client" ? { text: 'Home', icon: <HomeIcon />, path: '/home' }:{ text: 'Home', icon: <Dashboard />, path: '/hometasker' },
+      userInfo.role == "client" ? { text: 'Home', icon: <HomeIcon />, path: '/home' }:{ text: 'Home', icon: <HomeIcon />, path: '/hometasker' },
       { text: 'Notifications', icon: <NotificationsIcon /> , path: '/notification'},
-      userInfo.role == "client" ? { text: 'History', icon: <Dashboard />, path: '/history' }:{ text: 'Dashboard', icon: <Dashboard />, path: '/admindashboard' },
+      userInfo.role == "client" ? { text: 'History', icon: <History />, path: '/history' }:{ text: 'Profile', icon: <AccountCircle />, path: '/admindashboard' },
       
     ]
   }
@@ -116,18 +120,9 @@ const DrawerLeft = ({ children }) => {
       <CssBaseline />
       <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          {/* <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography variant="h6" noWrap component="div">
-            HuzaHub
-          </Typography>
+        <Typography variant="h6" noWrap component={Link} to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          HuzaHub
+        </Typography>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -151,60 +146,77 @@ const DrawerLeft = ({ children }) => {
         <List>
         {menuItems.map((item, index) => (
                         <ListItem 
-                            button 
-                            key={item.text}
-                            component={Link} 
-                            to={item.path}
-                            selected={location.pathname === item.path} // Highlight if current page matches
-                            sx={{
-                                fontWeight: location.pathname === item.path ? 'bold' : 'normal', // Bold if selected
-                            }}
-                        >
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text} />
-                        </ListItem>
+                        button 
+                        key={item.text}
+                        component={Link} 
+                        to={item.path}
+                        selected={location.pathname === item.path} // Highlight if current page matches
+                        sx={{
+                          fontWeight: location.pathname === item.path ? 'bold' : 'normal', // Make bold if selected
+                          '&:hover': {
+                            backgroundColor: 'rgba(0, 0, 0, 0.04)', // Optional: change on hover
+                            '& .MuiListItemText-primary': {
+                              fontWeight: 'bold', // Bold text on hover
+                            },
+                          },
+                        }}
+                      >
+                        <ListItemIcon >{item.icon}</ListItemIcon>
+                        <ListItemText 
+                          primary={item.text} 
+                          primaryTypographyProps={{ 
+                            fontWeight: 'bold' // Bold text always
+                          }}
+                        />
+                      </ListItem>
                     ))}
         </List>
         <Divider />
-        <List>
-            <ListItem disablePadding>
-              <ListItemButton onClick={() => dispatch(toggleActionTheme())}>
-                <ListItemIcon>
-                {palette.mode === "dark" ? (
-                        <DarkMode sx={{ color: "#808080", fontSize: "25px" }} />
-                    ) : (
-                        <LightMode sx={{ color: "808080", fontSize: "25px" }} />
-                    )}
-                </ListItemIcon>
-                {/* <ListItemText primary={text} /> */}
-              </ListItemButton>
-            </ListItem>
+        <List sx={{mt: 50}}>
+        <ListItem disablePadding>
+          <ListItemButton onClick={() => dispatch(toggleActionTheme())}>
+            <ListItemIcon>
+              {palette.mode === "dark" ? (
+                <DarkMode sx={{ color: "#808080", fontSize: "25px" }} />
+              ) : (
+                <LightMode sx={{ color: "808080", fontSize: "25px" }} />
+              )}
+            </ListItemIcon>
+            <ListItemText primary={palette.mode === "dark" ? "Light Mode" : "Dark Mode"} primaryTypographyProps={{ fontWeight: 'bold' }}/>
+          </ListItemButton>
+        </ListItem>
 
-            {!userInfo ? 
-            <ListItem 
-                  button 
-                  component={Link} 
-                  to={"/login"}
-                  selected={location.pathname === "/login"} // Highlight if current page matches
-                  sx={{
-                      fontWeight: location.pathname === "/login" ? 'bold' : 'normal', // Bold if selected
-                  }}
+            {!userInfo ? (
+              <ListItem 
+                button 
+                component={Link} 
+                to={"/login"}
+                selected={location.pathname === "/login"} // Highlight if current page matches
+                sx={{ fontWeight: 'bold'}} // Make bold always
               >
-                  {/* <ListItemIcon>{item.icon}</ListItemIcon> */}
-                  <ListItemText primary={"Log in"} />
-              </ListItem> 
-              
-              :
-
-              <ListItem disablePadding>
-                <ListItemButton onClick={logOutUser}>
-                  <ListItemText primary={"Logout"} />
-                </ListItemButton>
-            </ListItem>
-              }
-          
-
-            
+                <ListItemIcon>
+                  <Login />
+                </ListItemIcon>
+                <ListItemText 
+                  primary="Sign in"
+                  primaryTypographyProps={{ fontWeight: 'bold' }} // Bold text always
+                />
+              </ListItem>
+            ) : (
+              <ListItem 
+                button 
+                onClick={logOutUser} // Assuming logOutUser is your logout function
+                sx={{ fontWeight: 'bold'}} // Make bold always
+              >
+                <ListItemIcon>
+                  <Logout />
+                </ListItemIcon>
+                <ListItemText 
+                  primary="Sign out"
+                  primaryTypographyProps={{ fontWeight: 'bold' }} // Bold text always
+                />
+              </ListItem>
+            )}  
         </List>
       </Drawer>
       <Main>

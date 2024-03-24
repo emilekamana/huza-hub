@@ -1,78 +1,57 @@
-import { Box, Stack, Typography } from '@mui/material';
-import StatComponent from '../../component/StatComponent';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
-import WorkIcon from '@mui/icons-material/Work';
-import CategoryIcon from '@mui/icons-material/Category';
-import { Chart } from "react-google-charts";
-import { data, options } from './data/data'
-// import ChartComponent from '../../component/ChartComponent';
-import { LocalizationProvider, DatePicker } from '@mui/lab';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { TextField } from '@mui/material';
+import { Box, Typography, Avatar, Chip, Button, Rating } from '@mui/material';
+import React from 'react';
 import DrawerLeft from '../../component/DrawerLeft';
-import React, { useState } from 'react';
 import Footer from '../../component/Footer';
 
-
 const AdminDashboard = () => {
-    const [selectedDate, setSelectedDate] = useState(null);
-    return (
-        <>
-        <DrawerLeft>
-            <Box sx={{
-                display: 'flex', 
-                flexDirection: 'column', 
-                minHeight: '100vh',
-            }}>
-                <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
-                    Dashboard
-                </Typography>
-                <Stack
-                    direction={{ xs: 'column', sm: 'row' }}
-                    spacing={{ xs: 1, sm: 2, md: 4 }}
-                >
+  // Assume user data is fetched from the backend and set here
+  const user = {
+    username: 'Kim Parkinson',
+    bio: 'I will inspire 10 million people to do what they love the best they can!',
+    rating: 5,
+    reviews: 26,
+    price: 3.00,
+    sessionTime: 5,
+    sessions: 36,
+    email: 'katein@mail.com',
+  };
+  
 
-                    <StatComponent
-                        value="$5"
-                        icon={<SupervisorAccountIcon sx={{ color: "#fafafa", fontSize: 30 }} />}
-                        description="Price"
-                        money=''
-                    />
-                    <StatComponent
-                        value="450"
-                        icon={<WorkIcon sx={{ color: "#fafafa", fontSize: 30 }} />}
-                        description="Tasks"
-                        money=''
-                    />
-                    <StatComponent
-                        value="Pumbling"
-                        icon={<CategoryIcon sx={{ color: "#fafafa", fontSize: 30 }} />}
-                        description="Service"
-                        money=''
-                    />
-
-                </Stack>
-
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                    <DatePicker
-                        label="Booked Dates"
-                        value={selectedDate}
-                        onChange={(newValue) => {
-                            setSelectedDate(newValue);
-                        }}
-                        renderInput={(params) => <TextField {...params} />}
-                        shouldDisableDate={date => {
-                            // Logic to disable dates goes here
-                            // For example, to disable weekends:
-                            // return date.day() === 0 || date.day() === 6;
-                        }}
-                    />
-                </LocalizationProvider>
-            </Box>
-            <Footer />
-        </DrawerLeft>
-        </>
-    )
+  return (
+    <>
+      <DrawerLeft>
+        <Box sx={{
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center',
+          minHeight: '100vh',
+          bgcolor: 'background.paper',
+          py: 8,
+        }}>
+          <Avatar sx={{ width: 140, height: 140, mb: 2 }} src="/static/images/avatar/1.jpg" />
+          <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+            {user.username}
+          </Typography>
+          <Typography variant="body2" sx={{ mt: 1, mb: 2 }}>
+            {user.bio}
+          </Typography>
+          <Rating name="read-only" value={user.rating} readOnly />
+          <Typography variant="subtitle1" sx={{ mt: 1 }}>
+            {user.reviews} reviews
+          </Typography>
+          <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Chip label={`$${user.price} per min`} variant="outlined" sx={{ mb: 1 }} />
+            <Chip label={`${user.sessionTime} mins min talk time`} variant="outlined" sx={{ mb: 1 }} />
+            <Chip label={`${user.sessions} sessions`} variant="outlined" />
+          </Box>
+          <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <Button variant="contained" sx={{ alignSelf: 'flex-start' }}>Change profile</Button>
+          </Box>
+        </Box>
+        <Footer />
+      </DrawerLeft>
+    </>
+  )
 }
 
-export default AdminDashboard
+export default AdminDashboard;

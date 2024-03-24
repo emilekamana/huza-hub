@@ -1,40 +1,35 @@
+import React from "react";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import React from "react";
 import { Link } from "react-router-dom";
-import NavBar from "../component/Navbar2";
-import SlickSlider from "../component/SlickSlider";
-import TaskerSuggestions from "../component/TaskerSuggestions";
-import HowItWorks from "../component/HowItWorks";
-import Services from "../component/Services"; 
-import Footer from "../component/Footer";
-import Services2 from "../component/Services2";
+import NavBar from "../component/Navbar2"; // Ensure this is responsive if custom built
+import SlickSlider from "../component/SlickSlider"; // Ensure responsiveness
+import TaskerSuggestions from "../component/TaskerSuggestions"; // Ensure responsiveness
+import HowItWorks from "../component/HowItWorks"; // Ensure responsiveness
+import Services2 from "../component/Services2"; // Ensure responsiveness
+import Footer from "../component/Footer"; // Ensure responsiveness
+import Navbarr from "../component/Navbar2"; // Ensure this is responsive if custom built
+
 
 const LandingPage = () => {
   const theme = useTheme();
+  
   return (
     <>
-      <Box sx={{ minHeight: "100vh"}} >
-        <NavBar />
-
-        {/* bgcolor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent overlay */}
-
-
-
-      <Box
+      <Box sx={{ minHeight: "100vh" }}>
+        <Navbarr />
+        
+        <Box
           sx={{
-            position: 'relative', // Needed for absolute positioning of children
+            position: 'relative',
             textAlign: "center",
-            py: 8,
+            py: { xs: 4, sm: 8 }, // Adjust padding based on screen size
             color: "white",
-            height: "80vh",
+            height: { xs: "60vh", md: "80vh" }, // Adjust height based on screen size
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-           
-            
-            
           }}
         >
           {/* SlickSlider as a background */}
@@ -42,55 +37,31 @@ const LandingPage = () => {
             <SlickSlider />
           </Box>
 
-          <Typography variant="h2" sx={{ mb: 10, zIndex: 1, fontWeight: 'bold' }}>
+          <Typography variant="h2" sx={{ mb: { xs: 4, md: 10 }, zIndex: 1, fontWeight: 'bold', fontSize: { xs: "1.5rem", md: "2.5rem" } }}>
             Welcome to HuzaHub!
           </Typography>
 
-          <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
-            <Button
-              variant="contained"
-              sx={{ mb: 10, bgcolor: theme.palette.primary.main, zIndex: 1,  }}
-            >
-              <Link
-                to="/register"
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                Request for service 
-              </Link>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, justifyContent: 'center' }}>
+            <Button variant="contained" sx={{ mb: 2, bgcolor: theme.palette.primary.main, zIndex: 1 }}>
+              <Link to="/register" style={{ textDecoration: "none", color: "white" }}>Request for service</Link>
             </Button>
-
-            <Button
-              variant="outlined"
-
-              sx={{ mb: 10, zIndex: 1, borderColor: 'white', ":hover": { bgcolor: theme.palette.primary.main, color: 'white'} }}
-            >
-              <Link
-                to="/register"
-                style={{ textDecoration: "none", color: "white" }}
-              >
-                Start Working
-              </Link>
+            <Button variant="outlined" sx={{ mb: 2, zIndex: 1, borderColor: 'white', "&:hover": { bgcolor: theme.palette.primary.main, color: 'white' } }}>
+              <Link to="/signup" style={{ textDecoration: "none", color: "white" }}>Start Working</Link>
             </Button>
           </Box>
         </Box>
-        
 
-            
-        
-        <Container maxWidth="xl" sx={{ py: 10 }}>
-          <Grid container  alignItems="stretch">
-            {/* <Services />  */}
-            <Services2 /> 
+        <Container maxWidth="xl" sx={{ py: { xs: 5, md: 10 } }}>
+          <Grid container alignItems="stretch" spacing={4}>
+            <Services2 />
             <Grid item xs={12} md={8}>
               <HowItWorks />
-              {/* The SlickSlider is moved to the top Box */}
             </Grid>
             <Grid item xs={12} md={4}>
               <TaskerSuggestions />
             </Grid>
           </Grid>
         </Container>
-        {/* Add additional content sections here as needed */}
       </Box>
       <Footer />
     </>

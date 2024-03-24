@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Box, Tabs, Tab, Typography, List, ListItem, Divider, Paper } from '@mui/material';
+import { Box, Button, Tabs, Tab, Typography, List, ListItem, Divider, Paper } from '@mui/material';
 import DrawerLeft from '../component/DrawerLeft';
 import Footer from '../component/Footer';
+import { useNavigate } from "react-router-dom";
 // Sample data for booked services
 const services = {
   pending: [
@@ -16,20 +17,42 @@ const services = {
 
 const History = () => {
   const [selectedTab, setSelectedTab] = useState(0);
+  const navigate = useNavigate();
 
   const handleChangeTab = (event, newValue) => {
     setSelectedTab(newValue);
+  };
+
+  const handleConfirmService = (serviceId) => {
+    // Handle the confirmation action here
+    // You might want to call an API to update the service status
+    navigate("/confirm");
   };
 
   const renderServiceList = (serviceType) => (
     <List>
       {services[serviceType].map((service) => (
         <React.Fragment key={service.id}>
-          <ListItem>
-            <Typography>{service.name}</Typography>
-            <Typography variant="body2" color="text.secondary">
-              {service.date}
-            </Typography>
+          <ListItem
+            secondaryAction={
+              serviceType === 'pending' && (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleConfirmService(service.id)}
+                  to='/confirm'
+                >
+                  Confirm
+                </Button>
+              )
+            }
+          >
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="subtitle1">{service.name}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {service.date}
+              </Typography>
+            </Box>
           </ListItem>
           <Divider />
         </React.Fragment>

@@ -8,8 +8,6 @@ import NotFound from "./pages/NotFound";
 import { ProSidebarProvider } from "react-pro-sidebar";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AdminRoute from "./component/AdminRoute";
-import UserRoute from "./component/UserRoute";
 import LogIn from "./pages/LogIn";
 import Register from "./pages/Register";
 import SingleJob from "./pages/SingleJob";
@@ -24,23 +22,22 @@ import UserDashboard from "./pages/user/UserDashboard";
 import UserInfoDashboard from "./pages/user/UserInfoDashboard";
 import UserJobsHistory from "./pages/user/UserJobsHistory";
 // import Signup from "./pages/Signup";
-import React, { useState, useEffect } from 'react';
-import SplashScreen from './pages/SplashScreen';
 import { createTheme } from "@mui/material/styles";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { themeColors } from "./theme";
-import LandingPage from "./pages/Landingpage";
-import BookingPage from "./pages/BookingPage";
-import HomeTasker from "./pages/HomeTasker";
-import Notification from "./pages/Notification";
-import Services from "./component/Services";
-import ServiceProvider from "./pages/Signup";
-import Payment from "./pages/Payment";
 import Footer from "./component/Footer";
-import Signin from "./pages/Signin";
-import History from "./pages/History";
+import Services from "./component/Services";
+import BookingPage from "./pages/BookingPage";
 import ConfirmTask from "./pages/Confirm";
+import History from "./pages/History";
+import HomeTasker from "./pages/HomeTasker";
+import LandingPage from "./pages/Landingpage";
+import Notification from "./pages/Notification";
+import Payment from "./pages/Payment";
+import Signin from "./pages/Signin";
+import ServiceProvider from "./pages/Signup";
+import SplashScreen from "./pages/SplashScreen";
+import { themeColors } from "./theme";
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -55,10 +52,8 @@ const DashCreateCategoryHOC = Layout(DashCreateCategory);
 
 const App = () => {
   const { mode } = useSelector((state) => state.mode);
-  const { userInfo } = useSelector(state => state.signIn);
+  const { userInfo } = useSelector((state) => state.signIn);
   const theme = useMemo(() => createTheme(themeColors(mode)), [mode]);
-
-
 
   return (
     <>
@@ -80,29 +75,43 @@ const App = () => {
               <Route path="/footer" element={<Footer />} />
               <Route path="/signup" element={<ServiceProvider />} />
               <Route path="/signin" element={<Signin />} />
+              {/* <Route path="/hoho" element={<Hoho />} /> */}
               <Route path="/hometasker" element={<HomeTasker />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/payment" element={<Payment />} />
+              <Route path="/payment" element={<Payment />}/>
               <Route path="/history" element={<History />} />
               <Route path="/job/:id" element={<SingleJob />} />
               <Route path="/userdashboard" element={<UserDashboard />} />
               <Route path="/admindashboard" element={<AdminDashboard />} />
-              <Route path="/home" element={
-                <Home />
-               } />
+              <Route
+                path="/home"
+                element={
+                  userInfo ? (
+                    userInfo.role === "client" ? (
+                      <Home />
+                    ) : (
+                      <HomeTasker />
+                    )
+                  ) : (
+                    <LandingPage />
+                  )
+                }
+              />
+
               {/* <Route path="/home" element={
-                userInfo ?
                 <Home />
-                : userInfo?.role == "client" ?
-                <LandingPage />
+               } /> */}
+              {/* <Route path="/home" element={
+                userInfo?.role === "client" ?
+                <Home />
+                userInfo?.role === "" ?
                 :
                 <HomeTasker />
-                
-              
               } /> */}
+
               <Route path="/admindashboard" element={<AdminDashboard />} />
               <Route path="/booking" element={<BookingPage />} />
-              <Route
+              {/* <Route
                 path="/admin/dashboard"
                 element={
                   <AdminRoute>
@@ -173,7 +182,7 @@ const App = () => {
                     <UserInfoDashboardHOC />
                   </UserRoute>
                 }
-              />
+              /> */}
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
