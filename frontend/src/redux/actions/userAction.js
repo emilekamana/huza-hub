@@ -18,7 +18,10 @@ import {
     USER_SIGNIN_SUCCESS,
     USER_SIGNUP_FAIL,
     USER_SIGNUP_REQUEST,
-    USER_SIGNUP_SUCCESS
+    USER_SIGNUP_SUCCESS,
+    SERVICE_PROVIDER_LOGIN,
+    SERVICE_PROVIDER_SIGNUP,
+    SERVICE_PROVIDER_GET
 } from '../constants/userConstant';
 
 
@@ -27,6 +30,7 @@ export const userSignInAction = (user) => async (dispatch) => {
     dispatch({ type: USER_SIGNIN_REQUEST });
     try {
         const { data } = await axios.post("/api/signin", user);
+        console.log("signin data",data)
         localStorage.setItem('userInfo', JSON.stringify(data));
         dispatch({
             type: USER_SIGNIN_SUCCESS,
@@ -42,11 +46,48 @@ export const userSignInAction = (user) => async (dispatch) => {
     }
 }
 
+export const serviceProviderSignin = (serviceProvider) => async (dispatch) => {
+    dispatch({ type: SERVICE_PROVIDER_LOGIN });
+    try {
+        const { data } = await axios.post("/api/signinServiceProvider", serviceProvider);
+        console.log("signin data",data)
+        localStorage.setItem('serviceProviderInfo', JSON.stringify(data));
+        dispatch({
+            type: USER_SIGNIN_SUCCESS,
+            payload: data
+        });
+        toast.success("Login Successfully!");
+    } catch (error) {
+        dispatch({
+            type: USER_SIGNIN_FAIL,
+            payload: error.response.data.error
+        });
+        toast.error(error.response.data.error);
+    }
+}
 // user sign up action
 export const userSignUpAction = (user) => async (dispatch) => {
     dispatch({ type: USER_SIGNUP_REQUEST });
     try {
         const { data } = await axios.post("/api/signup", user);
+
+        dispatch({
+            type: USER_SIGNUP_SUCCESS,
+            payload: data
+        });
+        toast.success("Register Successfully!");
+    } catch (error) {
+        dispatch({
+            type: USER_SIGNUP_FAIL,
+            payload: error.response.data.error
+        });
+        toast.error(error.response.data.error);
+    }
+}
+export const serviceProviderSignup = (serviceProvider) => async (dispatch) => {
+    dispatch({ type: SERVICE_PROVIDER_SIGNUP });
+    try {
+        const { data } = await axios.post("/api/signupServiceProvider", serviceProvider);
 
         dispatch({
             type: USER_SIGNUP_SUCCESS,
@@ -107,6 +148,22 @@ export const allUserAction = () => async (dispatch) => {
     dispatch({ type: ALL_USER_LOAD_REQUEST });
     try {
         const { data } = await axios.get("/api/allusers");
+        dispatch({
+            type: ALL_USER_LOAD_SUCCESS,
+            payload: data
+        });
+
+    } catch (error) {
+        dispatch({
+            type: ALL_USER_LOAD_FAIL,
+            payload: error.response.data.error
+        });
+    }
+}
+export const allServiceProviders = () => async (dispatch) => {
+    dispatch({ type: SERVICE_PROVIDER_GET });
+    try {
+        const { data } = await axios.get("/api/allServiceProviders");
         dispatch({
             type: ALL_USER_LOAD_SUCCESS,
             payload: data

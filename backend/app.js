@@ -13,9 +13,11 @@ const userRoutes = require("./routes/userRoutes");
 const jobTypeRoute = require("./routes/jobsTypeRoutes");
 const jobRoute = require("./routes/jobsRoutes");
 const serviceRoute = require("./routes/serviceRoutes");
+const bookingRoute = require("./routes/bookingRoutes");
 
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error");
+const serviceProviderRoutes = require("./routes/serviceProviderRoutes");
 
 //database connection
 mongoose
@@ -56,6 +58,8 @@ app.use("/api", userRoutes);
 app.use("/api", jobTypeRoute);
 app.use("/api", jobRoute);
 app.use("/api", serviceRoute);
+app.use("/api", bookingRoute);
+app.use("/api", serviceProviderRoutes);
 
 __dirname = path.resolve();
 

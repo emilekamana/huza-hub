@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Button, TextField, Typography, Link } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -7,6 +7,9 @@ import { userSignInAction } from '../redux/actions/userAction';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Checkbox, FormControlLabel} from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+// import { token } from 'morgan';
+import Cookies from 'js-cookie';
+import jwtDecode from 'jwt-decode';
 
 const validationSchema = yup.object({
     username: yup
@@ -19,6 +22,23 @@ const validationSchema = yup.object({
 });
 
 const LogIn = () => {
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      try {
+        const jwtDecode = require('jwt-decode');
+        const decodedToken = jwtDecode(token);
+        console.log('Decoded Token:', decodedToken);
+        // Now you can use decodedToken to display user info or validate its expiry
+        // Remember, actual validation for security purposes should be done server-side
+      } catch (error) {
+        console.error('Error decoding token:', error);
+      }
+    } else {
+      // Token doesn't exist
+      console.log('No token found');
+    }
+  }, []);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -35,6 +55,7 @@ const LogIn = () => {
             navigate('/home');
         }
     });
+
 
     return (
         <Box

@@ -79,6 +79,7 @@ const DrawerLeft = ({ children }) => {
   const theme = useTheme();
   // const [open, setOpen] = React.useState(false);
   const { userInfo } = useSelector(state => state.signIn);
+  console.log(userInfo)
 
   var menuItems=[
     { text: 'Home', icon: <HomeIcon /> , path: '/home'},

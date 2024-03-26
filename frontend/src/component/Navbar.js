@@ -45,6 +45,7 @@ const Navbar = () => {
   ];
 const location = useLocation();
 const { userInfo } = useSelector(state => state.signIn);
+console.log(userInfo)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();

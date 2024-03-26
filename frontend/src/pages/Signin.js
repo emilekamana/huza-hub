@@ -3,7 +3,7 @@ import { Box, Button, TextField, Typography, Linkk } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch } from 'react-redux';
-import { userSignInAction } from '../redux/actions/userAction';
+import { serviceProviderSignin } from '../redux/actions/userAction';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Checkbox, FormControlLabel} from '@mui/material';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
@@ -29,13 +29,14 @@ const Signin = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values, actions) => {
-            dispatch(userSignInAction({...values, role:"service provider"}));
+            dispatch(serviceProviderSignin({...values, role:"service provider"}));
             // Here you would navigate to the dashboard or other appropriate page on successful login
             actions.resetForm();
             navigate('/hometasker');
         }
     });
 
+    
     return (
         <Box
           sx={{

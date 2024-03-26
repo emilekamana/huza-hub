@@ -38,6 +38,7 @@ import Signin from "./pages/Signin";
 import ServiceProvider from "./pages/Signup";
 import SplashScreen from "./pages/SplashScreen";
 import { themeColors } from "./theme";
+// import Availability from "./component/Calendar";
 
 //HOC
 const UserDashboardHOC = Layout(UserDashboard);
@@ -75,7 +76,7 @@ const App = () => {
               <Route path="/footer" element={<Footer />} />
               <Route path="/signup" element={<ServiceProvider />} />
               <Route path="/signin" element={<Signin />} />
-              {/* <Route path="/hoho" element={<Hoho />} /> */}
+              {/* <Route path="/calendar" element={<Availability />} /> */}
               <Route path="/hometasker" element={<HomeTasker />} />
               <Route path="/register" element={<Register />} />
               <Route path="/payment" element={<Payment />}/>
@@ -110,8 +111,7 @@ const App = () => {
               } /> */}
 
               <Route path="/admindashboard" element={<AdminDashboard />} />
-              <Route path="/booking" element={<BookingPage />} />
-              {/* <Route
+              <Route path="/booking/:serviceProviderId" element={<BookingPage/>} />              {/* <Route
                 path="/admin/dashboard"
                 element={
                   <AdminRoute>

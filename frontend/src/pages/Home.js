@@ -41,16 +41,16 @@ const Home = () => {
 
   const { keyword, location } = useParams();
 
-  const [users, setUsers] = useState([]);
+  const [serviceProviders, setServiceProviders] = useState([]);
   const [setUniqueLocation, setSetUniqueLocation] = useState([]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchServiceProviders = async () => {
       try {
         console.log('keyword: ', keyword)
         console.log('location: ', location)
         // Include credentials with the request
-        const response = await fetch(`http://localhost:9000/api/allUsers/?keyword=${keyword||''}&location=${location||''}`, {
+        const response = await fetch(`http://localhost:9000/api/allServiceProviders/?keyword=${keyword||''}&location=${location||''}`, {
           credentials: "include", // This line is added to include cookies with the request
         });
 
@@ -60,20 +60,20 @@ const Home = () => {
         console.log(response)
         const data = await response.json();
         console.log(data)
-        const taskers = data.users.filter((user) => user.role === 'service provider');
+        const taskers = data.serviceProviders.filter((serviceProvider) => serviceProvider.role === 'service provider');
         setSetUniqueLocation(data.setUniqueLocation)
 
         // console.log("data", data.users.filter((user) => user.role !== "admin"));
-        setUsers(taskers);
+        setServiceProviders(taskers);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchUsers();
+    fetchServiceProviders();
   }, [keyword, location]);
 
-  console.log("all users", users);
+  console.log("all users", serviceProviders);
 
   const { palette } = useTheme();
   const dispatch = useDispatch();
@@ -96,12 +96,12 @@ useEffect(() => {
 const [currentPage, setCurrentPage] = useState(1);
 
 // Calculate total pages
-const totalPages = Math.ceil(users.length / itemsPerPage);
+const totalPages = Math.ceil(serviceProviders.length / itemsPerPage);
 
 // Calculate the users to display on the current page
-const indexOfLastUser = currentPage * itemsPerPage;
-const indexOfFirstUser = indexOfLastUser - itemsPerPage;
-const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+const indexOfLastServiceProvider = currentPage * itemsPerPage;
+const indexOfFirstServiceProvider = indexOfLastServiceProvider - itemsPerPage;
+const currentServiceProviders = serviceProviders.slice(indexOfFirstServiceProvider, indexOfLastServiceProvider);
 
 // Handle change page
 const handleChangePage = (event, newPage) => {
@@ -145,8 +145,8 @@ console.log(" hehehe", Cookies.get('token'))
               {/* Service Providers Section */}
               <Grid item xs={12} md={8} lg={9}>
               <Grid container spacing={3}>
-                {currentUsers.map((user) => (
-                  <Grid item xs={12} sm={6} md={4} key={user._id}>
+                {currentServiceProviders.map((serviceProvider) => (
+                  <Grid item xs={12} sm={6} md={4} key={serviceProvider._id}>
                     <Card
                       sx={{
                         display: 'flex',
@@ -170,34 +170,34 @@ console.log(" hehehe", Cookies.get('token'))
                           border: '3px solid white', 
                           objectFit: 'cover',
                         }}
-                        src={user.avatarUrl} // Replace with the actual image path
-                        alt={user.username}
+                        src={serviceProvider.avatarUrl} // Replace with the actual image path
+                        alt={serviceProvider.username}
                       />
                       {/* </Grid> */}
                       <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                        {user.username}
+                        {serviceProvider.username}
                       </Typography>
                       <Typography variant="caption" display="block" gutterBottom>
-                        {user.description}
+                        {serviceProvider.description}
                       </Typography>
                       <Box sx={{ my: 2, width: '100%' }}>
                         <Grid container spacing={1} justifyContent="space-between">
                           <Grid >
                             <Typography variant="subtitle2" gutterBottom>Fee</Typography>
-                            <Typography variant="text" sx={{ fontWeight: 'bold' }}>{user.fee}</Typography>
+                            <Typography variant="text" sx={{ fontWeight: 'bold' }}>{serviceProvider.fee}</Typography>
                           </Grid>
                           <Grid>
                             <Typography variant="subtitle2" gutterBottom sx={{marginLeft: 5}}>
                               Service
                             </Typography>
                             <Typography variant="body2" sx={{ fontWeight: 'bold', whiteSpace: 'normal', textAlign: 'center' }}>
-                              {user.serviceType}
+                              {serviceProvider.serviceType}
                             </Typography>
                           </Grid>
 
                           <Grid >
                             <Typography variant="subtitle2" gutterBottom>Location</Typography>
-                            <Typography variant="text" sx={{ fontWeight: 'bold' }}>{user.location}</Typography>
+                            <Typography variant="text" sx={{ fontWeight: 'bold' }}>{serviceProvider.location}</Typography>
                           </Grid>
                         </Grid>
                       </Box>

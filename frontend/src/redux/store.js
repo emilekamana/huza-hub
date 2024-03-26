@@ -12,6 +12,8 @@ import {
     userReducerSignUp
 } from './reducers/userReducer';
 import { modeReducer } from './reducers/themeModeReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import apiReducer from './reducers/apiSlice';
 
 //combine reducers
 const reducer = combineReducers({
@@ -27,7 +29,8 @@ const reducer = combineReducers({
     mode: modeReducer,
     registerJob: registerAjobReducer,
     deleteJob: deleteJobReducer,
-    createJobType: createJobTypeReducer
+    createJobType: createJobTypeReducer,
+    
 
 });
 
